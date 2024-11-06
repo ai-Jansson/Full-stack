@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forward Movement Logic Flow</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+    }
+
+    .flow-chart {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .step {
+      margin-bottom: 10px;
+      padding: 10px;
+      background-color: #ecf0f1;
+      border-radius: 3px;
+    }
+
+    .decision {
+      margin-bottom: 10px;
+      padding: 10px;
+      background-color: #e74c3c;
+      color: white;
+      border-radius: 3px;
+    }
+
+    .arrow {
+      text-align: center;
+      font-size: 20px;
+      color: #7f8c8d;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Forward Movement (March) to the Field's End</h1>
+  <div class="flow-chart">
+    <div class="step">Start</div>
+    <div class="arrow">↓</div>
+    <div class="step">Robot faces the field's end, back to the goal</div>
+    <div class="arrow">↓</div>
+    <div class="step">Move forward at 20% speed</div>
+    <div class="arrow">↓</div>
+    <div class="step">Check color sensor (port1)</div>
+    <div class="arrow">↓</div>
+    <div class="decision">Is reflected light intensity > 10%?</div>
+    <div class="arrow">↓ Yes &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No ↓</div>
+    <div class="step" style="display: inline-block; width: 45%;">Stop moving</div>
+    <div style="display: inline-block; width: 45%; vertical-align: top;">
+      <div class="arrow" style="transform: rotate(-90deg);">→</div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="step">Turn about-face</div>
+    <div class="arrow">↓</div>
+    <div class="step">End of first part</div>
+  </div>
+</body>
+
+</html>iv>
+    <div class="arrow">↓</div>
+    <div class="step">Turn about-face</div>
+    <div class="arrow">↓</div>
+    <div class="step">End of first part</div>
+  </div>
+</body>
+
+</html>

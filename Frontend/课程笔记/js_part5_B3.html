@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>课程笔记</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+
+        h1, h2, h3 {
+            color: #333;
+        }
+
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        code {
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .code-block {
+            margin-top: 10px;
+        }
+
+        .code-block pre {
+            background-color: #333;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .highlight {
+            background-color: #ffeb3b;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>课程笔记</h1>
+
+    <div class="section">
+        <h2>1. 今日课程内容概述</h2>
+        <p>今天的课程我们主要处理了两部分内容：</p>
+        <ul>
+            <li><strong>中间部分的 highlight 区域</strong>：该区域在页面中占据重要位置，通常用来展示具有重点信息的图片和文字。我们通过循环来生成多张图片，每张图片伴随着描述性文字。</li>
+            <li><strong>侧边部分的 message 和 request</strong>：这两部分是侧边栏的主要内容区域，包含了消息列表、请求部分，以及部分输入框和按钮的交互设计。</li>
+        </ul>
+        <p>课程的核心是数据的处理和如何将数据以动态、灵活的方式渲染到页面中。同时，我们还深入探讨了 CSS 的渐变效果、布局管理，以及如何通过 JavaScript 动态生成和操作 DOM。</p>
+    </div>
+
+    <div class="section">
+        <h2>2. 课程重点分析</h2>
+        <h3>(1) Highlight 部分</h3>
+        <p><strong>基本概念</strong>：</p>
+        <p>highlight 区域是中间展示图片和文字的部分，采用了图片和文字的组合结构。主要技术在于通过渐变背景突出文字内容。每张图片都有对应的描述性文字，我们希望这些内容能够通过动态方式生成，便于维护和扩展。</p>
+
+        <p><strong>实现方法</strong>：</p>
+        <ul>
+            <li>采用 JavaScript class 构造 highlight 组件。</li>
+            <li>class 中包含一个 constructor 方法，接收图片路径、文字描述等信息。</li>
+            <li>通过 build 方法生成 DOM 节点，并通过 appendChild 将这些节点插入到页面中。</li>
+        </ul>
+
+        <p><strong>技术细节</strong>：</p>
+        <p>渐变效果通过 CSS linear-gradient 实现，使得图片从上到下逐渐变暗，从而使文字能够在图片上更清晰地展示出来。在创建图片时，我们将 background-image 设置为图片的路径，并通过 background-position 和 background-size 来确保图片适应框架的大小。</p>
+
+        <p><strong>代码实现</strong>：</p>
+        <div class="code-block">
+            <pre><code class="language-js">
+class Highlight {
+  constructor(imageSrc, title, description) {
+    this.imageSrc = imageSrc;
+    this.title = title;
+    this.description = description;
+  }
+
+  build() {
+    const highlightDiv = document.createElement('div');
+    highlightDiv.classList.add('highlight');
+
+    highlightDiv.innerHTML = `
+      <div class="highlight-image" style="background-image: url('${this.imageSrc}')">
+        <div class="highlight-text">
+          <h2>${this.title}</h2>
+          <p>${this.description}</p>
+        </div>
+      </div>
+    `;
+
+    return highlightDiv;
+  }
+}
+
+const highlight = new Highlight('path_to_image.jpg', 'Title Example', 'Description here.');
+document.body.appendChild(highlight.build());
+            </code></pre>
+        </div>
+
+        <h3>(2) 侧边栏的 message 和 request 部分</h3>
+        <p><strong>基本概念</strong>：</p>
+        <p>侧边栏部分的 message 和 request 主要用于展示用户消息和请求的交互功能。通常需要列表化管理，比如消息列表和请求列表，需要通过动态生成这些内容。</p>
+
+        <p><strong>实现方法</strong>：</p>
+        <ul>
+            <li>使用循环来遍历数据，生成每个消息或请求的 DOM 节点，并插入到页面中。</li>
+            <li>侧边栏包括输入框和按钮的交互功能，通过 addEventListener 实现点击事件处理。</li>
+        </ul>
+
+        <p><strong>代码实现</strong>：</p>
+        <div class="code-block">
+            <pre><code class="language-js">
+// 动态生成 message 列表
+class Message {
+  constructor(name, text) {
+    this.name = name;
+    this.text = text;
+  }
+
+  build() {
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add('message-item');
+    
+    messageDiv.innerHTML = `
+      <h3>${this.name}</h3>
+      <p>${this.text}</p>
+    `;
+
+    return messageDiv;
+  }
+}
+
+// 生成多个消息
+const messages = [
+  new Message('User1', 'Hello there!'),
+  new Message('User2', 'How are you?')
+];
+
+messages.forEach(msg => document.body.appendChild(msg.build()));
+
+// 为按钮添加点击事件
+document.querySelectorAll('.message-button').forEach(button => {
+  button.addEventListener('click', function() {
+    document.querySelectorAll('.message-button').forEach(btn => btn.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+            </code></pre>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>3. 渐变背景的 CSS 设计</h2>
+        <p>在处理 highlight 部分时，我们使用了渐变背景来实现图片与文字的对比效果。具体实现如下：</p>
+        <div class="code-block">
+            <pre><code class="language-css">
+.highlight-image {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+
+.highlight-text {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  color: white;
+  padding: 20px;
+}
+            </code></pre>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>4. 页面布局与样式优化</h2>
+        <p>页面布局通过 flex 实现，使得各个区域（左侧、中间、右侧）保持良好的对齐和间距。justify-content 和 align-items 用于控制各个区域的排列方式，使页面整体布局更加协调。</p>
+        <div class="code-block">
+            <pre><code class="language-css">
+.main-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.highlight {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.message-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+            </code></pre>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>5. 互动功能实现</h2>
+        <p><strong>点击事件与状态切换</strong>：</p>
+        <div class="code-block">
+            <pre><code class="language-js">
+document.querySelectorAll('.button').forEach(button => {
+  button.addEventListener('click', function() {
+    document.querySelectorAll('.button').forEach(btn => btn.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+            </code></pre>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>6. 作业任务</h2>
+        <ul>
+            <li>任务 1：完成页面 highlight 区域的开发。确保图片和文字通过循环动态生成，并使用渐变效果突出文字内容。</li>
+            <li>任务 2：实现侧边栏 message 和 request 的交互功能。为按钮添加点击事件，确保点击不同按钮时，按钮的状态和样式能够正确切换。</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>7. 下节课内容预告</h2>
+        <p>下一节课我们将重点处理页面中间的卡片区域。该区域内容较为复杂，包含多个动态生成的卡片，每个卡片可能包含不同的数据和操作。</p>
+    </div>
+</div>
+
+</body>
+</html>

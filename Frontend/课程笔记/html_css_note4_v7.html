@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend Setup Guide with Vite and Sass</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        pre {
+            background-color: #333;
+            color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            color: #fff;
+            font-weight: bold;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Frontend Setup Guide with Vite and Sass</h1>
+
+    <h2>一、安装 Node.js 和 Volta</h2>
+
+    <h3>1. 安装 Node.js</h3>
+    <p>你可以从 <a href="https://nodejs.org" target="_blank">Node.js 官方网站</a> 下载 Node.js，并安装 LTS（Long Term Support，长期支持）版本。</p>
+
+    <h3>2. 安装 Volta</h3>
+    <p>Volta 是一个用于管理 Node.js 版本的工具，可以帮助你轻松地在不同项目中使用不同的 Node.js 版本。</p>
+
+    <p>安装 Volta（macOS 和 WSL）：打开终端并执行以下命令：</p>
+    <pre><code>curl https://get.volta.sh | bash</code></pre>
+
+    <p>安装 Volta（Windows）：</p>
+    <ol>
+        <li>下载 Volta 的 Windows 安装包。</li>
+        <li>启用 Windows 开发者模式（路径：Update & Security -> For Developers -> Developer Mode）。</li>
+    </ol>
+
+    <h3>使用 Volta 安装 Node.js：</h3>
+    <p>安装 Volta 后，你可以使用以下命令安装 Node.js：</p>
+    <pre><code>volta install node</code></pre>
+
+    <h2>二、NPM 和 Yarn 的基本操作</h2>
+
+    <h3>1. 安装 NPM 和 Yarn</h3>
+    <p>NPM 是 Node.js 自带的包管理工具，无需额外安装。</p>
+    <p>Yarn 是 Facebook 开发的另一个包管理工具，可以通过 NPM 安装：</p>
+    <pre><code>npm install -g yarn</code></pre>
+
+    <p>或者使用 Volta 安装 Yarn 的特定版本：</p>
+    <pre><code>volta install yarn@1.22.22</code></pre>
+
+    <h3>2. NPM 和 Yarn 的常用命令</h3>
+
+    <p>安装依赖：</p>
+    <p>使用 NPM：</p>
+    <pre><code>npm install &lt;package_name&gt;</code></pre>
+
+    <p>使用 Yarn：</p>
+    <pre><code>yarn add &lt;package_name&gt;</code></pre>
+
+    <p>安装开发依赖：</p>
+    <p>使用 NPM：</p>
+    <pre><code>npm install &lt;package_name&gt; --save-dev</code></pre>
+
+    <p>使用 Yarn：</p>
+    <pre><code>yarn add &lt;package_name&gt; --dev</code></pre>
+
+    <p>运行脚本：</p>
+    <p>使用 NPM：</p>
+    <pre><code>npm run &lt;script&gt;</code></pre>
+
+    <p>使用 Yarn：</p>
+    <pre><code>yarn &lt;script&gt;</code></pre>
+
+    <h2>三、使用 Vite 构建前端项目</h2>
+
+    <h3>1. 使用 Vite 创建项目</h3>
+    <p>Vite 是一个快速的前端构建工具。你可以使用 NPM 或 Yarn 来初始化 Vite 项目。</p>
+
+    <p>使用 NPM 创建 Vite 项目：</p>
+    <pre><code>npm create vite@latest</code></pre>
+
+    <p>在命令执行后，根据提示选择项目模板（如 Vanilla、React、Vue 等），并输入项目名称。</p>
+
+    <p>使用 Yarn 创建 Vite 项目：</p>
+    <pre><code>yarn create vite</code></pre>
+
+    <h3>2. 启动开发服务器</h3>
+    <p>在 Vite 项目目录下，运行以下命令来启动开发服务器：</p>
+    <p>使用 NPM：</p>
+    <pre><code>npm run dev</code></pre>
+
+    <p>使用 Yarn：</p>
+    <pre><code>yarn dev</code></pre>
+
+    <p>服务器启动后，Vite 会在本地 localhost 上提供开发服务器，通常是 <a href="http://localhost:5173" target="_blank">http://localhost:5173</a>。</p>
+
+    <h3>3. Vite 配置文件</h3>
+    <p>Vite 使用 <code>vite.config.js</code> 进行项目配置。以下是一个简单的 Vite 配置文件示例：</p>
+    <pre><code>import { defineConfig } from 'vite';
+
+export default defineConfig({
+  // 配置选项
+});</code></pre>
+
+    <h2>四、使用 Sass 和 SCSS</h2>
+
+    <h3>1. Sass 和 SCSS 的基本概念</h3>
+    <p>Sass 是一种增强的 CSS 预处理语言，允许使用变量、嵌套规则、混合等高级功能。<br>
+    SCSS 是 Sass 的一种语法，完全兼容 CSS。</p>
+
+    <h3>2. 在项目中使用 Sass</h3>
+    <p>你可以通过以下命令安装 Sass：</p>
+    <p>使用 NPM：</p>
+    <pre><code>npm install sass --save-dev</code></pre>
+
+    <p>使用 Yarn：</p>
+    <pre><code>yarn add sass --dev</code></pre>
+
+    <p>安装后，你可以在项目中使用 <code>.scss</code> 文件来编写样式。例如：</p>
+    <p>创建一个 SCSS 文件（<code>src/styles/main.scss</code>）：</p>
+    <pre><code>$primary-color: #3498db;
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: $primary-color;
+}</code></pre>
+
+    <p>在 JavaScript 中导入 SCSS 文件（<code>src/main.js</code>）：</p>
+    <pre><code>import './styles/main.scss';</code></pre>
+
+    <h3>3. Sass 的基本用法</h3>
+    <p>你可以使用以下语法来增强 CSS 开发：</p>
+
+    <p>变量：</p>
+    <pre><code>$primary-color: #333;
+
+.header {
+  color: $primary-color;
+}</code></pre>
+
+    <p>嵌套规则：</p>
+    <pre><code>.nav {
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    display: inline-block;
+    margin-right: 5px;
+  }
+}</code></pre>
+
+    <h2>五、项目构建及打包</h2>
+
+    <h3>1. 构建项目</h3>
+    <p>构建项目可以生成生产环境所需的静态文件，通常用于上线发布。</p>
+    <p>使用 NPM：</p>
+    <pre><code>npm run build</code></pre>
+
+    <p>使用 Yarn：</p>
+    <pre><code>yarn build</code></pre>
+
+    <h3>2. 预览构建结果</h3>
+    <p>构建完成后，你可以在本地预览生成的生产环境文件：</p>
+    <p>使用 NPM：</p>
+    <pre><code>npm run preview</code></pre>
+
+    <p>使用 Yarn：</p>
+    <pre><code>yarn preview</code></pre>
+
+    <h2>六、课程作业与练习</h2>
+    <h3>学习 Sass 和 SCSS：</h3>
+    <ul>
+        <li>掌握 Sass 和 SCSS 的基本语法和使用方法。</li>
+        <li>熟悉嵌套规则、变量、混合等特性。</li>
+    </ul>
+
+    <h3>完成 CSS Battle 的挑战：</h3>
+    <ul>
+        <li>访问 <a href="https://cssbattle.dev/" target="_blank">CSS Battle</a> 网站，完成初级关卡的挑战。</li>
+        <li>提交完成后的截图，展示你的 CSS 技能水平。</li>
+    </ul>
+
+    <h3>提交作业：</h3>
+    <p>请将你的挑战截图和 Sass 学习笔记提交到指定的作业平台。确保你的代码格式化正确，并包含注释以说明你的解决方案。</p>
+
+    <h3>总结：</h3>
+    <p>通过以上内容和代码，你应该能够掌握如何使用 Node.js、NPM、Yarn 和 Vite 来构建现代前端项目，并使用 Sass 和 SCSS 进行高级样式开发。如果有其他问题，欢迎随时提问！</p>
+</body>
+</html>

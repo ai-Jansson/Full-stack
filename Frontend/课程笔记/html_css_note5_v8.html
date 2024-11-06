@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Development Notes - Lesson 8</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1, h2, h3 {
+            color: #333;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        pre {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        code {
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        ul {
+            margin: 10px 0 10px 20px;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Web Development Notes - Lesson 8</h1>
+
+    <h2>学习目标：</h2>
+    <ul>
+        <li>掌握 Yarn 和 SCSS（Sass）的使用</li>
+        <li>理解项目的基本结构和配置</li>
+        <li>学习响应式设计和优化项目代码结构</li>
+    </ul>
+
+    <h2>步骤一：创建项目并安装依赖</h2>
+    <h3>1. 使用 Yarn 创建项目</h3>
+    <pre><code>yarn create vite</code></pre>
+    <p>根据提示选择项目模板，例如：选择 "vanilla"（纯 JavaScript 项目），然后输入项目名称（小写）。</p>
+
+    <h3>2. 安装 Sass</h3>
+    <pre><code>yarn add sass --dev</code></pre>
+    <p>使用 <code>--dev</code> 参数将 Sass 标记为开发依赖（Development Dependency）。</p>
+
+    <h2>步骤二：配置 Vite 和 SCSS</h2>
+    <h3>1. 配置 Vite</h3>
+    <pre><code>import { defineConfig } from 'vite';
+
+export default defineConfig({
+  // 配置选项
+});</code></pre>
+
+    <h3>2. 使用 SCSS 编写样式</h3>
+    <p>项目结构：</p>
+    <pre><code>my-project/
+│
+├── index.html
+├── src/
+│   ├── main.js
+│   └── styles/
+│       └── main.scss
+└── vite.config.js</code></pre>
+
+    <h3>index.html 文件：</h3>
+    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Vite and Sass Example&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id=&quot;app&quot;&gt;
+    &lt;h1&gt;Hello, Vite and Sass!&lt;/h1&gt;
+    &lt;button id=&quot;counter&quot;&gt;Count: 0&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;script type=&quot;module&quot; src=&quot;/src/main.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+    <h3>main.scss 文件：</h3>
+    <pre><code>// 定义变量
+$primary-color: #3498db;
+$secondary-color: #2ecc71;
+$text-color: #333;
+
+// 使用嵌套规则和变量
+body {
+  font-family: Arial, sans-serif;
+  background-color: $primary-color;
+  color: $text-color;
+
+  // 嵌套规则
+  .header {
+    background-color: $secondary-color;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .button {
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+  }
+}</code></pre>
+
+    <h3>main.js 文件：</h3>
+    <pre><code>import './styles/main.scss';</code></pre>
+
+    <h2>步骤三：SCSS 的高级用法</h2>
+    <h3>1. 使用变量</h3>
+    <pre><code>// 定义变量
+$primary-color: #3498db;
+$secondary-color: #2ecc71;
+$text-color: #333;</code></pre>
+
+    <h3>2. 嵌套规则</h3>
+    <pre><code>body {
+  font-family: Arial, sans-serif;
+  background-color: $primary-color;
+  color: $text-color;
+
+  // 嵌套规则
+  .header {
+    background-color: $secondary-color;
+    padding: 1rem;
+    text-align: center;
+  }
+}</code></pre>
+
+    <h3>3. 使用 Mixin</h3>
+    <pre><code>// 定义 Mixin
+@mixin button-style($bg-color: $primary-color, $text-color: white) {
+  background-color: $bg-color;
+  color: $text-color;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darken($bg-color, 10%);
+  }
+}
+
+// 使用 Mixin
+.button {
+  @include button-style;
+}</code></pre>
+
+    <h2>步骤四：实现响应式设计</h2>
+    <pre><code>// 响应式设计示例
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  .header {
+    padding: 0.5rem;
+  }
+}
+
+@media (min-width: 769px) {
+  body {
+    font-size: 16px;
+  }
+
+  .header {
+    padding: 1rem;
+  }
+}</code></pre>
+
+    <h2>步骤五：版本控制与项目发布</h2>
+    <h3>1. 使用 Git 进行版本控制</h3>
+    <pre><code>git init</code></pre>
+
+    <h3>2. 创建 .gitignore 文件</h3>
+    <pre><code># .gitignore 文件内容
+node_modules/
+dist/</code></pre>
+
+    <h3>3. 将项目提交到 GitHub</h3>
+    <pre><code>git add .
+git commit -m "Initial commit"
+git remote add origin &lt;your-repo-url&gt;
+git push -u origin master</code></pre>
+
+    <h2>步骤六：项目代码结构和优化</h2>
+    <p>优化后的项目结构：</p>
+    <pre><code>my-project/
+│
+├── index.html
+├── src/
+│   ├── main.js
+│   └── styles/
+│       ├── _variables.scss
+│       ├── _mixins.scss
+│       └── main.scss
+└── vite.config.js</code></pre>
+
+    <h3>main.scss 文件：</h3>
+    <pre><code>@import 'variables';
+@import 'mixins';
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: $primary-color;
+  color: $text-color;
+}</code></pre>
+
+    <h2>小结与作业</h2>
+    <p>通过本节课的学习，我们掌握了如何使用 Yarn 和 SCSS 创建和管理前端项目，理解了 SCSS 的高级用法，学习了响应式设计的实现方法，并优化了项目的代码结构。</p>
+
+    <p><strong>作业：</strong></p>
+    <ul>
+        <li>使用本节课学到的知识，完成一个小型的前端项目，要求：</li>
+        <ul>
+            <li>创建项目并安装依赖。</li>
+            <li>使用 SCSS 编写样式，至少包含变量、嵌套规则和一个 Mixin。</li>
+            <li>实现基本的响应式设计。</li>
+            <li>使用 Git 进行版本控制，并将项目提交到 GitHub。</li>
+        </ul>
+        <li>提交作业时，请附上代码和运行截图。</li>
+    </ul>
+
+    <p>如有问题或需要帮助，请随时与我联系。</p>
+
+    <h2>额外说明</h2>
+    <p>在使用这些工具和技术时，请确保对其有足够的理解。以下是一些额外的注意事项和技巧：</p>
+    <ul>
+        <li><strong>SCSS 变量：</strong> 变量应在项目中保持一致，避免重复定义相同的变量。</li>
+        <li><strong>响应式设计：</strong> 确保所有的媒体查询都能有效适配不同的设备，建议使用常见的断点。</li>
+        <li><strong>Git 使用：</strong> 养成良好的提交习惯，每次提交前确保代码可以正常运行，并写清楚提交信息。</li>
+    </ul>
+
+    <h2>总结</h2>
+    <p>本节课我们学习了 Yarn 和 SCSS 的基本使用方法，了解了如何在项目中配置和使用这些工具。同时，我们还学习了响应式设计的基本概念和实现方式，以及如何使用 Git 进行版本控制。通过这些学习，相信大家能够更好地完成前端项目开发。</p>
+
+    <p>下节课我们将深入学习如何在实际项目中使用这些工具和技术，以及如何优化项目性能。</p>
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目开发笔记</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <style>
+      /* 全局样式 */
+      body {
+          font-family: 'Poppins', sans-serif;
+          font-size: 16px;
+          line-height: 1.5;
+          margin: 10px;
+          padding: 0;
+          background-color: #f5f5f5;
+          color: #333;
+      }
+
+      h1, h2, h3 {
+          color: #2c3e50;
+      }
+
+      h1 {
+          font-size: 2.5em;
+          margin-bottom: 0.5em;
+      }
+
+      h2 {
+          font-size: 2em;
+          margin-bottom: 0.75em;
+      }
+
+      h3 {
+          font-size: 1.5em;
+          margin-bottom: 0.5em;
+      }
+
+      p {
+          margin-bottom: 1em;
+      }
+
+      pre {
+          background-color: #eee;
+          padding: 1em;
+          overflow-x: auto;
+          border-radius: 5px;
+      }
+
+      code {
+          background-color: #eaeaea;
+          padding: 0.2em 0.4em;
+          border-radius: 3px;
+      }
+
+      /* 响应式设计 */
+      @media (max-width: 768px) {
+          body {
+              font-size: 14px;
+          }
+
+          h1 {
+              font-size: 2em;
+          }
+
+          h2 {
+              font-size: 1.5em;
+          }
+
+          h3 {
+              font-size: 1.2em;
+          }
+
+          header nav ul li {
+              display: block;
+              margin: 5px 0;
+          }
+
+          main {
+              padding: 1em;
+          }
+      }
+  </style>
+</head>
+<body>
+    <header>
+        <h1>项目开发笔记</h1>
+        <nav>
+            <ul>
+                <li><a href="#section1">1. 项目设置与安装</a></li>
+                <li><a href="#section2">2. 项目结构初始化</a></li>
+                <li><a href="#section3">3. 项目打包与分享</a></li>
+                <li><a href="#section4">4. 代码结构和样式调整</a></li>
+                <li><a href="#section5">5. 功能实现与页面优化</a></li>
+                <li><a href="#section6">6. 字体设置与兼容性调整</a></li>
+                <li><a href="#section7">7. 课程作业与练习</a></li>
+                <li><a href="#section8">8. 总结与课程回顾</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="section1">
+            <h2>1. 项目设置与安装</h2>
+            <h3>1.1 下载 <code>src</code> 压缩包</h3>
+            <p>在课程中提到的链接或指定的网络存储中，下载名为 <code>src</code> 的压缩包，大小超过 80MB。这个压缩包包含项目所需的初始文件和资源，如图标、图片、JavaScript 文件等。下载完成后，将压缩包解压到项目的根目录下，确保所有文件和文件夹都正确解压出来。</p>
+            
+            <h3>1.2 安装开发环境</h3>
+            <p>使用 Yarn 初始化项目：</p>
+            <ol>
+                <li>打开 VS Code，确保你的计算机上已经安装了 Node.js 和 Yarn。</li>
+                <li>使用 Yarn 进行项目初始化。在终端中输入以下命令来创建一个新的项目：</li>
+            </ol>
+            <pre><code>yarn create project-a1</code></pre>
+            <p>这个命令会启动一个 Yarn 创建向导，引导你选择项目路径和 JavaScript 环境。你可以选择 JavaScript 或 TypeScript，取决于项目的需求。</p>
+            <p>安装必要的依赖：</p>
+            <p>使用 Yarn 安装必要的依赖包，例如 Sass，用于编写和处理样式文件：</p>
+            <pre><code>yarn add sass -D</code></pre>
+            <p><code>-D</code> 选项表示这是一个开发依赖项（<code>devDependencies</code>），仅在开发环境中使用。</p>
+        </section>
+
+        <section id="section2">
+            <h2>2. 项目结构初始化</h2>
+            <h3>2.1 清理和设置项目结构</h3>
+            <p>删除不必要的文件和资源：</p>
+            <p>打开项目文件夹，删除不需要的文件，如 <code>public</code> 目录下的 <code>wait.svg</code> 和 <code>container.js</code> 文件。这些文件在当前项目中没有用处，删除它们可以保持项目的简洁和整洁。</p>
+            <h3>修改 <code>index.html</code>：</h3>
+            <p>打开 <code>index.html</code> 文件，更新页面的基本结构和内容：</p>
+            <ul>
+                <li>删除对已删除资源的引用，例如 <code>wait.svg</code>。</li>
+                <li>修改 <code>&lt;title&gt;</code> 标签为项目的名称，例如 <code>Project A1</code>，以便在浏览器标签上显示正确的项目名称。</li>
+            </ul>
+            <h3>更新样式文件：</h3>
+            <p>将原来的 <code>style.css</code> 文件重命名为 <code>style.scss</code>，以使用 Sass 的高级功能。清空 <code>style.scss</code> 文件的内容，以便重新设置和定义样式。</p>
+
+            <h3>2.2 设置基本项目框架</h3>
+            <p>创建基础文件和文件夹结构：</p>
+            <pre><code>├── src/
+│   ├── icons/
+│   ├── images/
+│   ├── scripts/
+├── public/
+├── styles/
+│   ├── style.scss
+├── index.html
+</code></pre>
+            <p><code>src</code> 文件夹包含所有的源代码和资源文件，<code>public</code> 文件夹用于存放公开访问的文件，<code>styles</code> 文件夹用于存放样式文件。</p>
+
+            <h3>定义页面的基本结构：</h3>
+            <p>在 <code>index.html</code> 中，使用 HTML5 语义化标签来定义页面的结构，包括 <code>header</code>、<code>main</code>、<code>footer</code> 等：</p>
+            <pre><code>&lt;header&gt;
+  &lt;!-- 头部内容 --&gt;
+&lt;/header&gt;
+&lt;main&gt;
+  &lt;!-- 主体内容 --&gt;
+&lt;/main&gt;
+&lt;footer&gt;
+  &lt;!-- 底部内容 --&gt;
+&lt;/footer&gt;
+</code></pre>
+        </section>
+
+        <section id="section3">
+            <h2>3. 项目打包与分享</h2>
+            <h3>3.1 打包项目</h3>
+            <p>打包项目文件：</p>
+            <p>在打包项目时，确保不将 <code>node_modules</code> 文件夹包含在压缩包内，因为该文件夹通常非常大且可以通过运行 <code>yarn install</code> 来重新生成。</p>
+            <p>使用以下命令将项目文件打包为 <code>.zip</code> 文件：</p>
+            <pre><code>zip -r project-a1.zip . -x "node_modules/*"</code></pre>
+            <p>该命令会递归压缩当前目录下的所有文件和文件夹，但会排除 <code>node_modules</code> 文件夹。</p>
+            
+            <h3>3.2 分享项目</h3>
+            <p>分享打包好的项目：</p>
+            <p>将打包好的 <code>.zip</code> 文件上传到课程指定的文件共享平台或直接分享给需要的同学。这样可以确保大家使用相同的项目结构和依赖版本。</p>
+            <h3>版本兼容性注意事项：</h3>
+            <p>老师特别强调了版本兼容性的问题。由于框架和依赖库会随着时间更新，如果将某个版本的框架打包使用，可能会与未来的版本不兼容。因此，建议每次使用框架时都重新安装依赖，确保使用最新兼容的版本。</p>
+        </section>
+
+        <section id="section4">
+            <h2>4. 代码结构和样式调整</h2>
+            <h3>4.1 定义项目基本结构</h3>
+            <p>使用 HTML5 语义化标签：</p>
+            <p>使用 HTML5 的 <code>header</code>、<code>main</code>、<code>footer</code> 等标签来定义页面的布局结构，这样做有助于增强页面的语义性和可读性：</p>
+            <pre><code>&lt;header&gt;
+  &lt;nav&gt;
+    &lt;!-- 导航栏内容 --&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;
+  &lt;section&gt;
+    &lt;!-- 主要内容部分 --&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;
+  &lt;!-- 页脚内容 --&gt;
+&lt;/footer&gt;
+</code></pre>
+
+<p>使用 CSS 设置 SVG 图标：</p>
+<p>在样式文件 <code>style.scss</code> 中，使用 <code>background</code> 属性来设置 SVG 图标的样式，并使用 <code>filter</code> 属性来调整图标颜色：</p>
+<pre><code>.menu-logo {
+background: url('src/icons/menu.svg') no-repeat center;
+width: 24px;
+height: 24px;
+filter: invert(1); /* 将黑色图标反转为白色 */
+}
+</code></pre>
+<p>通过这种方式，可以轻松地调整 SVG 图标的颜色，而不需要修改图标本身。</p>
+
+<h3>4.3 使用 Flexbox 进行布局</h3>
+<p>使用 Flexbox 设置布局：</p>
+<p>在 <code>style.scss</code> 中，使用 Flexbox 布局来管理页面元素的排列和对齐方式：</p>
+<pre><code>header, footer {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+main {
+display: flex;
+flex-direction: column;
+flex-grow: 1;
+}
+</code></pre>
+<p>Flexbox 提供了强大的布局功能，可以方便地进行水平和垂直方向上的对齐和分布。</p>
+</section>
+
+<section id="section5">
+<h2>5. 功能实现与页面优化</h2>
+<h3>5.1 添加动画效果</h3>
+<p>使用 CSS 动画属性：</p>
+<p>使用 CSS <code>animation</code> 属性为页面元素添加动态效果，例如淡入效果。可以使用 <code>@keyframes</code> 定义动画关键帧：</p>
+<pre><code>@keyframes fadeIn {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+
+.fade-in {
+animation: fadeIn 0.5s ease-in-out;
+}
+</code></pre>
+<p>这种动画可以用于页面加载时的元素渐入效果，提升用户体验。</p>
+
+<h3>5.2 实现响应式设计</h3>
+<p>使用媒体查询实现响应式设计：</p>
+<p>使用 <code>@media</code> 查询来设置不同屏幕尺寸下的样式，确保页面在各种设备上的显示效果：</p>
+<pre><code>@media (max-width: 768px) {
+.menu-logo {
+width: 20px;
+height: 20px;
+}
+}
+</code></pre>
+<p>响应式设计可以确保页面在不同大小的屏幕上都能良好显示，提供一致的用户体验。</p>
+
+<h3>5.3 添加按钮效果</h3>
+<p>为按钮添加 <code>hover</code> 和 <code>active</code> 状态：</p>
+<p>在样式文件中，为按钮元素设置 <code>hover</code> 和 <code>active</code> 状态的样式，以增强交互效果：</p>
+<pre><code>button {
+background-color: $main-color;
+color: #fff;
+padding: 10px 20px;
+border-radius: 5px;
+border: none;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+button:hover {
+background-color: darken($main-color, 10%);
+}
+
+button:active {
+background-color: lighten($main-color, 10%);
+}
+</code></pre>
+<p>使用 <code>transition</code> 属性，可以平滑地过渡按钮颜色的变化。</p>
+</section>
+
+<section id="section6">
+<h2>6. 字体设置与兼容性调整</h2>
+<h3>6.1 加载 Google 字体</h3>
+<p>引入 Google 字体：</p>
+<p>使用 Google Fonts 为页面引入所需字体，在 <code>style.scss</code> 文件中进行字体的引入和设置：</p>
+<pre><code>@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+font-family: 'Poppins', sans-serif;
+}
+</code></pre>
+<p>这可以确保页面的字体在各种浏览器和设备上都能正确显示。</p>
+
+<h3>6.2 设置字体与行高</h3>
+<p>使用 <code>em</code> 单位设置行高：</p>
+<p><strong>为什么使用 <code>em</code> 单位：</strong></p>
+<p><code>em</code> 是相对单位，它基于当前元素的字体大小来计算。使用 <code>em</code> 单位设置行高（<code>line-height</code>），可以确保文本的行高相对于字体大小进行缩放，从而在不同的字体大小下保持一致的比例。</p>
+<p>例如，<code>line-height: 1.5em;</code> 意味着行高是字体大小的 1.5 倍。无论字体大小如何改变，行高都将相应调整，确保文本的可读性和视觉美观。</p>
+<p><strong>如何在项目中应用 <code>em</code> 单位：</strong></p>
+<p>在 <code>style.scss</code> 中，为文本元素如 <code>h1</code>、<code>h2</code>、<code>p</code> 等设置字体大小和行高：</p>
+<pre><code>body {
+font-size: 16px; /* 基础字体大小 */
+}
+
+h1 {
+font-size: 2em; /* 32px */
+line-height: 1.2em; /* 1.2 倍字体大小，行高为 38.4px */
+}
+
+p {
+font-size: 1em; /* 16px */
+line-height: 1.5em; /* 1.5 倍字体大小，行高为 24px */
+}
+</code></pre>
+<p>这种做法使得字体和行高能够根据基准字体大小灵活调整，从而保持布局的一致性。</p>
+
+<h3>设置响应式字体和行高</h3>
+<p>使用媒体查询进行响应式调整：</p>
+<p>为了确保字体和行高在不同设备上的可读性，使用媒体查询（<code>@media</code>）在不同屏幕尺寸下调整字体大小和行高：</p>
+<pre><code>@media (max-width: 768px) {
+body {
+font-size: 14px; /* 较小屏幕下调整基础字体大小 */
+}
+
+h1 {
+font-size: 1.8em; /* 较小的 h1 字体 */
+line-height: 1.3em; /* 较大的行高确保可读性 */
+}
+
+p {
+font-size: 0.9em; /* 较小的 p 字体 */
+line-height: 1.6em; /* 较大的行高确保文本间距 */
+}
+}
+</code></pre>
+<p>这种方式可以确保在小屏幕设备（如手机）上字体不会显得过大或过小，同时行高也适应较窄的屏幕宽度。</p>
+</section>
+
+<section id="section7">
+<h2>7. 课程作业与练习</h2>
+<h3>7.1 作业要求</h3>
+<p><strong>为其他部分添加动画效果：</strong></p>
+<p>要求学生为项目的其他部分（如 <code>header</code>、<code>footer</code>）添加动画效果。可以使用类似的 <code>@keyframes</code> 动画定义来实现不同的动画效果。</p>
+<p>例如，可以为 <code>header</code> 添加淡入淡出效果，为 <code>footer</code> 添加滑入效果：</p>
+<pre><code>@keyframes slideIn {
+from { transform: translateY(100%); }
+to { transform: translateY(0); }
+}
+
+footer {
+animation: slideIn 0.8s ease-in-out;
+}
+</code></pre>
+
+<p><strong>使用媒体查询实现响应式设计：</strong></p>
+<p>要求学生使用 <code>@media</code> 查询为不同设备设置响应式样式，确保页面在不同屏幕尺寸下的显示效果。</p>
+<p>学生应根据设备类型（如手机、平板、桌面）调整字体大小、行高、布局等属性。</p>
+
+<h3>7.2 额外任务</h3>
+<p><strong>探索更多 CSS 动画和样式设置：</strong></p>
+<p>鼓励学生探索更多 CSS 动画和样式设置，增强页面的视觉效果和用户体验。</p>
+<p>例如，研究不同的动画曲线（如 <code>ease-in</code>、<code>ease-out</code>、<code>linear</code> 等）如何影响动画效果，尝试不同的动画持续时间和延迟时间。</p>
+
+<p><strong>掌握布局和响应式设计方法：</strong></p>
+<p>鼓励学生深入理解 Flexbox 和 Grid 布局，了解它们在不同场景下的使用方法。</p>
+<p>掌握如何使用 <code>@media</code> 查询和相对单位（如 <code>em</code>、<code>rem</code>）来创建响应式设计，确保页面在各种设备上的一致性和适应性。</p>
+</section>
+
+<section id="section8">
+<h2>8. 总结与课程回顾</h2>
+<p><strong>项目的初步框架搭建：</strong></p>
+<p>通过本次课程，学生学习了如何搭建一个基本的项目框架，包括项目初始化、结构设置、样式定义等。</p>
+
+<p><strong>样式设置和功能实现：</strong></p>
+<p>学生了解了如何使用 Sass 编写更高级的样式，如何使用 Flexbox 布局，如何为页面元素添加动画效果，以及如何使用媒体查询实现响应式设计。</p>
+
+<p><strong>提升开发技能：</strong></p>
+<p>本次课程的内容帮助学生提升了前端开发技能，包括对 HTML、CSS、Sass、Flexbox、动画和响应式设计的深入理解和应用。</p>
+
+<p>通过以上详细的步骤，学生应该能够完整地理解和应用课程内容，完成项目的基本开发工作，并为后续的功能扩展和优化打下坚实的基础。</p>
+</section>
+</main>
+
+<footer>
+<p>&copy; 2024 项目开发笔记. 版权所有.</p>
+</footer>
+</body>
+</html>

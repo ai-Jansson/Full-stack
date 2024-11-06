@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Social Project Notes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+    }
+    h1, h2 {
+      color: #333;
+    }
+    pre {
+      background-color: #eaeaea;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+    .code-block {
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Top Social Project Notes</h1>
+
+  <h2>1. 课程介绍与项目目标</h2>
+  <p><strong>目标</strong>：本节课继续开发 <code>Top Social</code> 项目，这是一个社交平台的前端开发项目。</p>
+  <p><strong>时间限制</strong>：项目的框架搭建较为复杂，因此前期的框架搭建部分已由老师完成，学生只需下载并配置相关资源。</p>
+  <p><strong>下载与配置</strong>：</p>
+  <ul>
+    <li>通过 <code>p two</code> 进入项目资源页面，下载 <code>star</code> 文件，解压后将其放入专门用来写代码的目录，例如 <code>project b one</code>。</li>
+    <li>将下载的 <code>images</code> 放入 <code>public</code> 目录，确保资源文件能被正确引用。</li>
+  </ul>
+
+  <h2>2. 项目的基础结构</h2>
+  <p>项目的基础结构由 HTML 和 JavaScript 组合而成，主要部分包括：</p>
+  <ul>
+    <li><strong>Navibar</strong>：顶部导航栏，包含 <code>logo</code>、<code>search bar</code>、<code>profile</code> 头像及按钮部分。</li>
+    <li><strong>Main</strong>：页面的主要内容部分，分为 <code>left</code>、<code>middle</code>、<code>right</code> 三个区域。</li>
+  </ul>
+
+  <div class="code-block">
+    <h3>代码示例（HTML结构）</h3>
+    <pre><code>&lt;body&gt;
+  &lt;div class="navi"&gt;
+    &lt;!-- 导航栏部分 --&gt;
+    &lt;div class="container"&gt;
+      &lt;div class="logo"&gt;Top Social&lt;/div&gt;
+      &lt;div class="search-bar"&gt;
+        &lt;label for="navi-search"&gt;
+          &lt;i class="search-icon"&gt;&lt;/i&gt;
+        &lt;/label&gt;
+        &lt;input type="search" id="navi-search" placeholder="Search for creators"&gt;
+      &lt;/div&gt;
+      &lt;div class="create"&gt;
+        &lt;button class="btn-primary"&gt;Create&lt;/button&gt;
+        &lt;div class="profile-photo"&gt;
+          &lt;img src="path_to_profile_image" alt="Profile Photo"&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;main class="main"&gt;
+    &lt;div class="container"&gt;
+      &lt;div class="main-left"&gt;&lt;/div&gt;
+      &lt;div class="main-middle"&gt;&lt;/div&gt;
+      &lt;div class="main-right"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/main&gt;
+&lt;/body&gt;
+    </code></pre>
+  </div>
+
+  <h2>3. 样式与布局设计</h2>
+  <p><strong>Navibar 样式</strong>：通过 <code>CSS</code> 设置导航栏布局，<code>flex</code> 布局将 <code>logo</code>、<code>search bar</code> 和 <code>profile</code> 部分水平排列。<code>Navibar</code> 的 <code>position</code> 设为 <code>fixed</code>，确保其始终在页面顶部不随页面滚动。</p>
+
+  <div class="code-block">
+    <h3>代码示例（CSS样式）</h3>
+    <pre><code>.navi {
+  display: flex;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #ffffff;
+  z-index: 9999;
+  padding: 0.7rem 0;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: 0.7rem;
+  border-radius: 2rem;
+}
+
+.profile-photo img {
+  width: 2.7rem;
+  height: 2.7rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+    </code></pre>
+  </div>
+
+  <h2>4. JavaScript 动态生成内容</h2>
+  <p><strong>核心思想</strong>：项目中的 <code>HTML</code> 内容是动态生成的，数据从 <code>JSON</code> 文件中获取，然后通过 <code>JavaScript</code> 动态插入页面。这一部分的关键逻辑是通过 <code>JavaScript</code> 操作 DOM，动态生成 <code>Navibar</code>、<code>Profile</code> 等组件的内容。</p>
+
+  <div class="code-block">
+    <h3>代码示例（JavaScript 动态生成）</h3>
+    <pre><code>// 导入数据
+import profileData from './data/db.json';
+
+// 选择 DOM 节点
+const naviBar = document.querySelector('.navi');
+const profilePhoto = naviBar.querySelector('.profile-photo img');
+
+// 动态插入 profile 图片
+profilePhoto.src = profileData.profile.picture;
+
+// 动态生成 profile 组件
+function createProfile(profile) {
+  const profileElement = document.createElement('a');
+  profileElement.classList.add('profile');
+  profileElement.innerHTML = `
+    &lt;div class="profile-photo"&gt;
+      &lt;img src="${profile.picture}" alt="Profile Photo"&gt;
+    &lt;/div&gt;
+    &lt;div class="profile-description"&gt;
+      &lt;h2&gt;${profile.name}&lt;/h2&gt;
+      &lt;p&gt;${profile.at}&lt;/p&gt;
+    &lt;/div&gt;
+  `;
+  return profileElement;
+}
+
+// 将 profile 组件插入页面
+const mainLeft = document.querySelector('.main-left');
+mainLeft.appendChild(createProfile(profileData.profile));
+    </code></pre>
+  </div>
+
+  <h2>5. Left 区域的 Profile 组件</h2>
+  <p><strong>Left</strong> 区域是展示用户个人资料的地方，包含头像、用户名以及用户描述。</p>
+  <p><strong>Profile 组件动态生成</strong>：通过 <code>JavaScript</code> 中的 <code>createProfile</code> 函数，根据数据生成 <code>HTML</code> 元素，并插入到页面的 <code>left</code> 区域。</p>
+
+  <div class="code-block">
+    <h3>Profile 动态生成的结构</h3>
+    <pre><code>&lt;a class="profile"&gt;
+  &lt;div class="profile-photo"&gt;
+    &lt;img src="path_to_profile_image" alt="Profile Photo"&gt;
+  &lt;/div&gt;
+  &lt;div class="profile-description"&gt;
+    &lt;h2&gt;User Name&lt;/h2&gt;
+    &lt;p&gt;@username&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/a&gt;
+    </code></pre>
+  </div>
+
+  <h2>6. 布局问题及调试</h2>
+  <p><strong>问题描述</strong>：在设置 <code>profile</code> 头像时，头像的尺寸出现异常（图片缩小），这是由于 <code>CSS</code> 中的 <code>flex</code> 布局和 <code>padding</code> 设置不当引起的。</p>
+  <p><strong>问题解决</strong>：可以检查 <code>CSS</code> 中的 <code>padding</code> 和 <code>width</code> 设置，确保 <code>profile</code> 组件的宽高设置正确。同时检查 <code>object-fit: cover;</code> 设置，确保图片能够根据容器的大小调整。</p>
+
+  <div class="code-block">
+    <h3>问题修正的代码（CSS部分）</h3>
+    <pre><code>.profile-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+    </code></pre>
+  </div>
+
+  <h2>7. Main 区域布局设计</h2>
+  <p><strong>Main</strong> 部分使用 <code>grid</code> 布局，划分为 <code>left</code>、<code>middle</code> 和 <code>right</code> 三部分。通过 <code>grid-template-columns</code> 设置各区域的宽度，<code>left</code> 和 <code>right</code> 为固定宽度，<code>middle</code> 为自适应宽度。</p>
+
+  <div class="code-block">
+    <h3>代码示例（CSS部分，Main布局）</h3>
+    <pre><code>.main .container {
+  display: grid;
+  grid-template-columns: 8vw auto 20vw;
+  column-gap: 2rem;
+}
+
+.main-left, .main-middle, .main-right {
+  min-height: calc(100vh - 5.4rem);
+}
+    </code></pre>
+  </div>
+
+  <h2>8. 调试与最终效果</h2>
+  <p>在 <code>HTML</code> 和 <code>CSS</code> 基础架构搭建完成后，通过 <code>JavaScript</code> 动态填充数据，并实时调整样式，确保页面布局和各个组件能够正确展示。</p>
+
+  <h2>9. 下一步工作</h2>
+  <p>继续完善 <strong>Main</strong> 部分的布局，进一步完善 <code>middle</code> 和 <code>right</code> 区域的内容展示，同时修复可能存在的布局问题。</p>
+
+</div>
+
+</body>
+</html>

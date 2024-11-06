@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS 课程详细笔记</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        pre {
+            background-color: #191919; /* 设置代码部分背景为黑色 */
+            color: #d2d1d1; /* 设置代码文字颜色为浅色 */
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            font-weight: bold;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        p, li, ul {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>CSS 课程详细笔记</h1>
+
+    <h2>1. CSS 基础写法和选择器</h2>
+    <ul>
+        <li><strong>CSS 基础写法:</strong>
+            <p>在 CSS 中，我们使用选择器来指定 HTML 元素，应用样式规则。每个样式规则包含一个选择器和一组声明（属性和值）。</p>
+            <p>选择器示例：</p>
+            <pre><code>html, body { margin: 0; padding: 0; }</code></pre>
+            <p>这是一个组合选择器（使用逗号 "," 分隔）。它同时选中了 <code>html</code> 和 <code>body</code>，并应用相同的 <code>margin</code> 和 <code>padding</code> 样式。</p>
+            <pre><code>* { margin: 0; padding: 0; }</code></pre>
+            <p>通配符选择器 <code>*</code> 选择所有元素，常用于重置浏览器默认的边距和填充。</p>
+        </li>
+        <li><strong><code>:root</code> 伪类:</strong>
+            <p><code>:root</code> 是一个特殊的选择器，它选中文档的根元素，在 HTML 中，它对应 <code>&lt;html&gt;</code> 元素。使用 <code>:root</code> 可以定义全局的 CSS 变量，供整个文档使用。</p>
+            <p>变量定义：</p>
+            <pre><code>:root {
+  --color-A: #e8c094;
+  --color-B: #c0cf8c;
+  font-size: 10px;
+}</code></pre>
+            <p>变量引用：</p>
+            <pre><code>.element {
+  color: var(--color-A);
+}</code></pre>
+            <p><strong>优势:</strong> 使用 CSS 变量可以简化样式管理，尤其在需要多次使用相同样式值时，修改方便快捷。</p>
+        </li>
+    </ul>
+
+    <h2>2. 全局样式重置与基础样式设置</h2>
+    <ul>
+        <li><strong>全局样式重置:</strong>
+            <p>为了消除浏览器之间默认样式的差异，通常会使用全局样式重置。</p>
+            <p>示例：</p>
+            <pre><code>* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}</code></pre>
+            <p>解释：</p>
+            <ul>
+                <li><code>margin: 0;</code> 和 <code>padding: 0;</code> 用于移除所有元素的默认外边距和内边距。</li>
+                <li><code>box-sizing: border-box;</code> 改变盒模型计算方式，使得元素的 <code>width</code> 和 <code>height</code> 包含了 <code>padding</code> 和 <code>border</code>，不需要手动计算。</li>
+            </ul>
+        </li>
+        <li><strong>基础样式设置:</strong>
+            <p>通过设置 <code>font-size</code> 等属性，可以建立一个基础的视觉样式。</p>
+            <p>例如：</p>
+            <pre><code>:root {
+  font-size: 10px; /* 设置基础字体大小为10px */
+}
+
+body {
+  font-size: 1.6rem; /* 使用 rem 单位，相对于 :root 的字体大小 */
+}</code></pre>
+            <p>使用 rem 单位的好处是可以根据根元素的字体大小进行相对缩放，适应不同的设备和屏幕分辨率。</p>
+        </li>
+    </ul>
+
+    <h2>3. 盒模型与 <code>box-sizing</code> 属性</h2>
+    <ul>
+        <li><strong>盒模型:</strong>
+            <p>每个 HTML 元素的盒模型包含内容（content）、内边距（padding）、边框（border）和外边距（margin）。</p>
+            <p>默认情况下，CSS 的盒模型只包含内容的宽度和高度，不包含内边距和边框。这使得在调整元素大小时需要额外计算。</p>
+        </li>
+        <li><strong><code>box-sizing</code> 属性:</strong>
+            <p><code>box-sizing: content-box;</code>（默认）：宽度和高度仅包含内容，不包含 <code>padding</code> 和 <code>border</code>。</p>
+            <p><code>box-sizing: border-box;</code>：宽度和高度包含 <code>padding</code> 和 <code>border</code>，不需要额外计算。</p>
+            <p>使用示例：</p>
+            <pre><code>* {
+  box-sizing: border-box;
+}</code></pre>
+        </li>
+    </ul>
+
+    <h2>4. CSS 定位属性详解</h2>
+    <ul>
+        <li><strong>定位属性:</strong>
+            <p><code>static</code>（默认）：元素按照正常文档流进行排列。</p>
+            <p><code>relative</code>：元素相对于其正常位置进行偏移，但仍占据原位置。</p>
+            <p><code>absolute</code>：元素相对于最近的已定位祖先元素进行定位，并脱离文档流，不再占据原位置。</p>
+            <p><code>fixed</code>：元素相对于浏览器窗口进行定位，不随滚动条滚动。</p>
+            <p><code>sticky</code>：元素在跨越特定阈值后会“粘住”在某个位置，直到超出父元素的边界。</p>
+        </li>
+        <li><strong>详细说明:</strong>
+            <p><strong><code>relative</code> 定位:</strong></p>
+            <p>相对定位允许我们通过 <code>top</code>、<code>right</code>、<code>bottom</code>、<code>left</code> 属性来调整元素相对于其正常位置的偏移量。</p>
+            <p>使用场景：需要在正常文档流中保留元素原始位置，但希望元素有微小移动。</p>
+            <pre><code>.relative {
+  position: relative;
+  top: 10px;
+  left: 5px;
+}</code></pre>
+            <p><strong><code>absolute</code> 定位:</strong></p>
+            <p>绝对定位使元素脱离文档流，定位相对于最近的已定位祖先（即不是 <code>static</code> 的祖先元素）。如果没有已定位祖先，则相对于 <code>&lt;html&gt;</code> 元素。</p>
+            <p>使用场景：弹出层、模态框等需要精确控制位置的元素。</p>
+            <pre><code>.absolute {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+}</code></pre>
+            <p><strong><code>fixed</code> 定位:</strong></p>
+            <p>固定定位相对于浏览器窗口，不会随页面滚动条滚动。</p>
+            <p>使用场景：固定导航栏、侧边栏。</p>
+            <pre><code>.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+}</code></pre>
+<p><strong><code>sticky</code> 定位:</strong></p>
+<p>粘性定位结合了相对定位和固定定位的特点。元素在页面滚动到一定位置时变成固定定位。</p>
+<p>使用场景：表头固定、广告栏等。</p>
+<pre><code>.sticky {
+position: sticky;
+top: 10px; /* 到达10px后粘住 */
+}</code></pre>
+</li>
+</ul>
+
+<h2>5. Flexbox 布局</h2>
+<ul>
+<li><strong>Flexbox 概述:</strong>
+<p>Flexbox 是一种一维布局模型，用于在容器内分配元素的空间。</p>
+<p>设置 <code>display: flex</code> 创建一个 flex 容器，该容器的子元素称为 flex 项。</p>
+</li>
+<li><strong>Flexbox 关键属性:</strong></li>
+<ul>
+<li><strong>容器属性:</strong></li>
+<ul>
+    <li><code>flex-direction</code>：定义主轴方向（行/列）。</li>
+    <li><code>justify-content</code>：定义主轴上的元素排列方式（左对齐、右对齐、居中、两端对齐、均匀分布等）。</li>
+    <li><code>align-items</code>：定义交叉轴上的元素排列方式（顶部对齐、底部对齐、居中、拉伸等）。</li>
+    <li><code>flex-wrap</code>：定义子元素是否换行。</li>
+    <li><code>gap</code>：定义子元素之间的间距。</li>
+</ul>
+<li><strong>子元素属性:</strong></li>
+<ul>
+    <li><code>flex-grow</code>：定义元素的放大比例。</li>
+    <li><code>flex-shrink</code>：定义元素的缩小比例。</li>
+    <li><code>flex-basis</code>：定义元素的基础大小。</li>
+</ul>
+</ul>
+<li><strong>Flexbox 使用示例:</strong></li>
+<pre><code>.container {
+display: flex;
+flex-direction: row; /* 水平布局 */
+justify-content: space-between; /* 两端对齐 */
+align-items: center; /* 垂直居中 */
+flex-wrap: wrap; /* 换行 */
+gap: 1rem; /* 间距 */
+}
+
+.item {
+flex-grow: 1; /* 等比例放大 */
+flex-basis: 200px; /* 基础宽度 */
+}</code></pre>
+</ul>
+
+<h2>6. 高级选择器</h2>
+<ul>
+<li><strong>子选择器 (<code>></code>):</strong>
+<p>仅选择直接子元素。</p>
+<p>例如：<code>div > p { color: red; }</code> 只选择 <code>div</code> 内的直接子元素 <code>p</code>。</p>
+</li>
+<li><strong>相邻兄弟选择器 (<code>+</code>):</strong>
+<p>选择紧邻的兄弟元素。</p>
+<p>例如：<code>h1 + p { margin-top: 0; }</code> 选择紧跟在 <code>h1</code> 之后的 <code>p</code>。</p>
+</li>
+<li><strong>一般兄弟选择器 (<code>~</code>):</strong>
+<p>选择同级的所有后续兄弟元素。</p>
+<p>例如：<code>h1 ~ p { color: blue; }</code> 选择 <code>h1</code> 后面的所有 <code>p</code> 元素。</p>
+</li>
+</ul>
+
+<h2>7. 属性选择器</h2>
+<ul>
+<li><strong>属性选择器的用法:</strong>
+<p><code>[attribute=value]</code> 选择具有特定属性和值的元素。</p>
+<p>例如：<code>input[type="number"]</code> 选择所有类型为 <code>number</code> 的输入框。</p>
+<p>可以根据属性选择特定类型的元素，方便样式管理和组件开发。</p>
+</li>
+<li><strong>使用示例:</strong></li>
+<pre><code>input[type="number"] {
+background-color: #fed1ef; /* 特定类型的样式 */
+}</code></pre>
+</ul>
+<h2>8. 其他 CSS 技巧和注意事项</h2>
+<ul>
+    <li><strong>消除文本装饰和列表样式:</strong>
+        <p>在一些默认情况下，链接元素（<code>&lt;a&gt;</code>）会带有下划线，列表（<code>&lt;ul&gt;</code> 和 <code>&lt;ol&gt;</code>）会带有默认的项目符号或编号。</p>
+        <p>可以使用 <code>text-decoration: none;</code> 移除链接的下划线，使用 <code>list-style: none;</code> 移除列表的项目符号或编号。</p>
+        <p>这些属性在定义全局样式时很常用，特别是在构建自定义导航菜单时。</p>
+        <p>示例:</p>
+        <pre><code>a {
+text-decoration: none; /* 去除链接的下划线 */
+}
+
+ul, ol {
+list-style: none; /* 去除列表项的默认符号或编号 */
+}</code></pre>
+    </li>
+    <li><strong>禁止用户选择文本和拖拽元素:</strong>
+        <p>为了防止用户选中文本或拖拽图像，可以使用 <code>user-select: none;</code> 和 <code>-webkit-user-drag: none;</code>。</p>
+        <p><code>user-select: none;</code> 阻止用户选择文本，这在构建不可选中的按钮或自定义控件时非常有用。</p>
+        <p><code>-webkit-user-drag: none;</code> 特定于 WebKit 引擎（如 Chrome 和 Safari），可以防止图像被拖拽。</p>
+        <p>示例:</p>
+        <pre><code>* {
+user-select: none; /* 禁止选择文本 */
+-webkit-user-drag: none; /* 禁止拖拽元素 */
+}</code></pre>
+    </li>
+    <li><strong>如何使用 <code>calc()</code> 函数:</strong>
+        <p><code>calc()</code> 是一个 CSS 函数，用于动态计算长度值。它允许在 CSS 中使用加法、减法、乘法和除法来计算元素的尺寸。</p>
+        <p>使用 <code>calc()</code> 可以实现响应式布局和动态尺寸计算。例如，可以使用 <code>calc(100% - 50px)</code> 来设置元素的宽度为容器宽度减去 50 像素。</p>
+        <p>示例:</p>
+        <pre><code>.element {
+width: calc(100% - 20px); /* 宽度是容器宽度减去20像素 */
+height: calc(50vh - 10rem); /* 高度是视口高度的一半减去10rem */
+}</code></pre>
+        <p><strong><code>calc()</code> 的优点:</strong></p>
+        <ul>
+            <li>它可以在不使用 JavaScript 的情况下进行动态计算，适用于创建更灵活的布局。</li>
+            <li>支持混合单位计算（例如：<code>calc(100% - 50px)</code>），这在处理相对和绝对尺寸时非常有用。</li>
+        </ul>
+    </li>
+    <li><strong>如何理解 <code>border-box</code> 的使用场景:</strong>
+        <p>使用 <code>box-sizing: border-box;</code> 可以避免在设置宽度和高度时手动计算 <code>padding</code> 和 <code>border</code> 的尺寸。</p>
+        <p>这种方法特别适合于需要精确控制元素尺寸的场景，如多列布局或弹性盒布局。</p>
+        <p>例如，如果设置元素的宽度为 <code>200px</code>，并且设置了 <code>padding</code> 和 <code>border</code>，在默认的 <code>content-box</code> 模型下，实际元素的宽度会超过 <code>200px</code>。但是，在 <code>border-box</code> 模型下，宽度就被锁定为 <code>200px</code>，包括了 <code>padding</code> 和 <code>border</code>。</p>
+    </li>
+    <li><strong>定位元素脱离文档流的理解:</strong>
+        <p>在使用 <code>absolute</code> 或 <code>fixed</code> 定位时，元素会脱离文档流，这意味着它们不会影响其他元素的布局。</p>
+        <p><code>absolute</code> 定位相对于最近的已定位祖先元素（非 <code>static</code> 元素），如果没有已定位的祖先元素，则相对于 <code>body</code>。</p>
+        <p><code>fixed</code> 定位相对于视口，通常用于固定的导航栏或浮动广告。</p>
+        <p>在脱离文档流时，要注意元素的堆叠顺序，可以通过 <code>z-index</code> 属性来控制。<code>z-index</code> 越大，元素就越在上层。</p>
+    </li>
+    <li><strong>调整 <code>font-size</code> 和使用 <code>rem</code> 单位的优势:</strong>
+        <p>设置 <code>:root</code> 的 <code>font-size</code>，例如 <code>10px</code>，可以让我们更直观地使用 <code>rem</code> 单位进行相对尺寸的定义。</p>
+        <p><code>rem</code> 单位基于根元素的 <code>font-size</code>，例如，如果 <code>:root { font-size: 10px; }</code>，那么 <code>1rem</code> 就等于 <code>10px</code>。这使得 <code>rem</code> 单位在响应式设计中非常实用。</p>
+        <p>示例:</p>
+        <pre><code>:root {
+font-size: 10px; /* 根元素字体大小 */
+}
+
+.element {
+font-size: 1.6rem; /* 元素字体大小为16px（1.6 * 10px） */
+}</code></pre>
+    </li>
+    <li><strong>避免常见 CSS 错误和保持代码一致性:</strong>
+        <p>确保每个样式规则的结尾都使用分号 <code>;</code>，即使它是规则的最后一条声明。这可以防止由于忘记添加分号而导致的语法错误。</p>
+        <p>使用一致的代码格式和命名约定（如 BEM 命名法），以提高代码的可读性和可维护性。</p>
+        <p>充分利用注释来解释复杂的样式规则或布局技巧，特别是在团队协作中，以帮助其他开发人员理解代码。</p>
+    </li>
+</ul>
+</body>
+</html>

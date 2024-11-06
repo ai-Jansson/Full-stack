@@ -1,0 +1,658 @@
+
+学习MYSQL主要还是学习通用的SQL语句，那么SQL语句包括增删改查，主要划分：
+	DQL：（数据查询语言）： 查询语句，凡是select语句都是DQL;
+	DML（数据操作语言）： insert delete update， 对表当中的数据进行增删改查
+	DDL（数据定义语言）： create drop alter，对表结构进行增删改
+	TCL(事务控制语言)： commit提交事务 rollback回滚事务。(TCL中T是Transaction)
+	DCL(数据控制语言)： grant授权、revoke撤销权限等
+	
+	命名规范：
+		所有的标识符都是全部小写，单词和单词之间使用下划线进行衔接。
+
+DQL（select语句是永远都不会进行修改操作的）
+	a.简单查询：	
+		/*
+			select 
+				字段名1,字段名2,...
+			from 
+				表名;
+		*/	
+		
+		查询所有字段（效率低，可读性差）:
+			select * from 表名；
+			
+		字段可以使用数学表达式  
+		/*	
+			select 
+				salgrade*12 as yearsal 
+			from 
+				emp;
+		*/
+		
+		3.给查询的列起别名
+			select 字段名 as 别名 from 表名;
+			
+			假设起别名的时候，别名里面有空格或者中文，怎么办？
+				mysql> select deptno,dname （as） dept name from dept;
+				DBMS看到这样的语句，进行SQL语句的编译，不符合语法，编译报错。
+			怎么解决？
+				select deptno,dname 'dept name' from dept; //统一用单引号
+
+	b.条件查询：
+		查询语法格式：
+		/*	
+			select
+				字段1,字段2,字段3....
+			from 
+				表名
+			where	
+				条件;
+		*/
+				
+		基本符号：
+			1. =   !=（等同于<>）   >   >=   <   <=  
+			
+			2. between...and
+				注意：
+					使用between and的时候，必须遵循左小右大。
+					between and是闭区间，包括两端的值。
+					
+			3. is null 为 null（is not null 不为空）
+				注意：数据库中的null代表什么也没有，它不是一个值，所以不能使用等号衡量。
+				
+			4. and  or	
+				select　ｄｅｐｔｎｏ，ｄｎａｍｅ　ｆｒｏｍ　ｄｅｐｔ　ｗｈｅｒｅ　job = 'MANAGER' or job = 'SALESMAN';
+				注意：and和or同时出现，and优先级较高。如果想让or先执行，需要加“小括号”
+				
+			5.　ｉｎ　　ｎｏｔ　ｉｎ
+				select empno,ename,job from emp where job in('MANAGER', 'SALESMAN');
+				
+			６．　ｌｉｋｅ　称为模糊查询，支持%或下划线匹配
+				%：匹配任意多个字符
+				_：任意一个字符。
+			
+			找出名字中含有O的？
+			/*
+				select 
+					ename 
+				from 
+					emp 
+				where
+					ename like '%o%';
+			*/
+			
+			找出以T结尾的？　
+			/*
+				ｓｅｌｅｃｔ　
+					ｅｎａｍｅ　
+				ｆｒｏｍ　
+					ｅｍｐ　
+				ｗｈｅｒｅ　
+					ｅｎａｍｅ　ｌｉｋｅ　＇％Ｔ＇；
+			*/	
+			
+			找出名字以K开始的？　　
+			/*
+				ｓｅｌｅｃｔ　
+					ｅｎａｍｅ 
+				ｆｒｏｍ　
+					ｅｍｐ　
+				ｗｈｅｒｅ　
+					ｅｎａｍｅ　ｌｉｋｅ　＇Ｔ％＇；
+					
+			找出第三个字母是R的？　　
+			ｓｅｌｅｃｔ　
+				ｅｎａｍｅ　
+			ｆｒｏｍ　
+				ｅｍｐ　
+			ｗｈｅｒｅ　
+				ｅｎａｍｅ　ｌｉｋｅ　＇＿＿Ｒ％＇；
+				
+			注意：如果查找数据中有下划线　用＼转义字符
+				select　ｄｎａｍｅ　ｆｒｏｍ　ｄｅｐｔ　ｗｈｅｒｅ　ｎａｍｅ　ｌｉｋｅ　’％＼＿％‘
+	
+	c.排序
+		升序：　
+		/*
+			ｓｅｌｅｃｔ　
+				字段１，字段２　，...
+			ｆｒｏｍ　
+				表名　
+			ｏｒｄｅｒ　ｂｙ　
+				字段　ａｓｃ（默认的）
+		*/
+		
+		降序：
+		/*
+			ｓｅｌｅｃｔ　
+				字段１，字段２，...
+			ｆｒｏｍ　
+				表名　
+			ｏｒｄｅｒ　ｂｙ　
+				字段　ｄｅｓｃ
+		*/
+		
+		查询员工名字和薪资，要求按照薪资升序，如果薪资一样的话，再按照名字升序排列。
+		/*
+			select 
+				ename,sal　
+			from　
+				emp　
+			order by 
+				sal asc, ename asc; 
+			// sal在前，起主导，只有sal相等的时候，才会考虑启用ename排序。
+		*/
+		
+	d.数据处理函数（单行处理函数）
+		１．lower 转换小写　select lower(ename) as ename from emp;
+		
+	　	２．upper 转换大写
+	
+		３．substr 取子串（substr( 查询的列表, 起始下标,截取的长度)）
+		
+			找出员工名字第一个字母是A的员工信息？
+			第一种方式：模糊查询
+				select ename from emp where ename like 'A%';
+			第二种方式：substr函数
+				select 
+					ename 
+				from 
+					emp 
+				where 
+					substr(ename,1,1) = 'A';
+		
+		4. concat函数进行字符串的拼接
+		
+		5. length 取长度
+		
+		6. trim 会去首尾空格，不会去除中间的空格
+		
+		7. str_to_date 将字符串转换成日期
+		
+		8. date_format 格式化日期
+		
+		9. format 设置千分位
+			格式化数字：format(数字, '格式')
+			select ename,format(sal, '$999,999') as sal from emp;
+				+--------+-------+
+				| ename  | sal   |
+				+--------+-------+
+				| SMITH  | 800   |
+				| ALLEN  | 1,600 |
+				| WARD   | 1,250 |
+				| JONES  | 2,975 |
+				| MARTIN | 1,250 |
+				| BLAKE  | 2,850 |
+				| CLARK  | 2,450 |
+				| SCOTT  | 3,000 |
+				| KING   | 5,000 |
+				| TURNER | 1,500 |
+				| ADAMS  | 1,100 |
+				| JAMES  | 950   |
+				| FORD   | 3,000 |
+				| MILLER | 1,300 |
+				+--------+-------+
+
+		10. case … when … then …..else …end			
+			当员工的工作岗位是MANAGER的时候，工资上调10%，当工作岗位是SALESMAN的时候，工资上调50%,其它正常。
+			select ename, job, sal, case job when 'manager' then sal*1.1 when 'saleman' then sal*1.5 as newsal from emp;	
+		
+		11. round  四舍五入  
+			round(1234.5678,2) 保留两位小数 
+			round(1234.5678,-2)	保留置十位		
+		
+		12. rand  生成随机数
+		
+		13. innull	可以将 null 转换成一个具体值 ifnull(数据, 被当做哪个值)
+			注意：NULL只要参与运算，最终结果一定是NULL
+		
+	e.分组函数(多行处理函数)：输入多行，最终输出一行。
+		有5个： count、sun、avg、max、min
+		注意： 
+			1.分组函数自动忽略NULL，不需要提前对NULL进行处理。	
+				select sum(comm) from emp;
+				
+			2.分组函数中count(*)和count(具体字段)有什么区别？
+				mysql> select count(*) from emp;
+					+----------+
+					| count(*) |
+					+----------+
+					|       14 |
+					+----------+
+
+				mysql> select count(comm) from emp;
+					+-------------+
+					| count(comm) |
+					+-------------+
+					|           4 |
+					+-------------+
+			
+				count(具体字段)：表示统计该字段下所有不为NULL的元素的总数。
+				count(*)：统计表当中的总行数。（只要有一行数据count则++）
+				因为每一行记录不可能都为NULL，一行数据中有一列不为NULL，则这行数据就是有效的。
+			
+			3. 分组函数不能够直接使用在where子句中
+				ｓｅｌｅｃｔ　ｅｎａｍｅ，　ｓａｌ　ｆｒｏｍ　ｅｍｐ　ｗｈｅｒｅ　ｓｕｍ（ｓａｌ）＞５００　；　　　错误
+				因为分组函数在使用的时候必须先分组之后才能使用。
+				
+			4. 所有的分组函数可以组合起来一起用。
+			
+	f. 分组查询
+		在实际的应用中，可能有这样的需求，需要先进行分组，然后对每一组的数据进行操作。
+		
+			计算每个部门的工资和？
+			计算每个工作岗位的平均薪资？
+			找出每个工作岗位的最高薪资？
+	
+			select
+				...
+			from
+				...
+			group by
+				...
+			ｈａｖｉｎｇ
+				．．．
+			ｏｒｄｅｒ　ｂｙ　
+			　	．．．
+			
+		使用having可以对分完组之后的数据进一步过滤。	
+		
+		having不能单独使用，having不能代替where，having必须和group by联合使用。	
+		优化策略（效率更高）：
+				where和having，优先选择where，where实在完成不了了，再选择having。
+					
+		找出每个部门最高薪资，要求显示最高薪资大于3000的？
+
+		第一步：找出每个部门最高薪资
+			按照部门编号分组，求每一组最大值。
+			select deptno,max(sal) from emp group by deptno;
+			+--------+----------+
+			| deptno | max(sal) |
+			+--------+----------+
+			|     10 |  5000.00 |
+			|     20 |  3000.00 |
+			|     30 |  2850.00 |
+			+--------+----------+
+		
+		第二步：要求显示最高薪资大于3000
+			select 
+				deptno,max(sal) 
+			from 
+				emp 
+			group by 
+				deptno
+			having
+				max(sal) > 3000;
+
+			+--------+----------+
+			| deptno | max(sal) |
+			+--------+----------+
+			|     10 |  5000.00 |
+			+--------+----------+
+
+
+			思考一个问题：以上的sql语句执行效率是不是低？
+			比较低，实际上可以这样考虑：先将大于3000的都找出来，然后再分组。
+			select 
+				deptno,max(sal)
+			from
+				emp
+			where
+				sal > 3000
+			group by
+				deptno;
+			
+			+--------+----------+
+			| deptno | max(sal) |
+			+--------+----------+
+			|     10 |  5000.00 |
+			+--------+----------+	
+
+		where没办法的？？？？
+			找出每个部门平均薪资，要求显示平均薪资高于2500的。
+
+			第一步：找出每个部门平均薪资
+				select deptno,avg(sal) from emp group by deptno;
+				+--------+-------------+
+				| deptno | avg(sal)    |
+				+--------+-------------+
+				|     10 | 2916.666667 |
+				|     20 | 2175.000000 |
+				|     30 | 1566.666667 |
+				+--------+-------------+
+
+			第二步：要求显示平均薪资高于2500的
+				select 
+					deptno,avg(sal) 
+				from 
+					emp 
+				group by 
+					deptno
+				having
+					avg(sal) > 2500;
+			
+			+--------+-------------+
+			| deptno | avg(sal)    |
+			+--------+-------------+
+			|     10 | 2916.666667 |
+			+--------+-------------+
+			
+		关键字顺序：　ｓｅｌｅｃｔ　．．．　ｆｒｏｍ　．．．　ｗｈｅｒｅ　．．．　ｇｒｏｕｐ　ｂｙ　．．．　ｈａｖｉｎｇ　．．．　ｏｒｄｅｒ　ｂｙ　...
+		执行顺序是什么？1. from　2. where　3. group by　４．ｈａｖｉｎｇ　（筛选）　５. select　６. order by
+	
+
+		distinct 查询结果去除重复记录，distinct只能出现在所有字段的最前方。
+		select distinct ename, deptno from emp;
+	
+		统计一下工作岗位的数量？
+		select count(distinct job) from emp;
+	
+	g. 连接查询	
+		根据表连接的方式分类：
+			内连接：
+				等值连接
+				非等值连接
+				自连接
+
+			外连接：
+				左外连接（左连接）
+				右外连接（右连接）
+
+			全连接（不讲）
+	
+			笛卡尔积现象：当两张表进行连接查询，没有任何条件限制的时候，最终查询结果条数，是两张表条数的乘积
+					  为了避免这个现象需要加筛选条件
+	
+		1. 内连接之等值连接		
+			/*
+					select 
+						...
+					from
+						a
+					join
+						b
+					on
+						a和b的连接条件
+					where
+						筛选条件
+			*/
+			
+			案例：查询每个员工所在部门名称，显示员工名和部门名？
+			/*
+				select 
+					e.ename, d.dname
+				from 
+					emp e
+				inner join 
+					dept d
+				on 
+					e.deptno = d.deptno;	//条件是等量关系，所以被称为等值连接。
+		
+				//inner可以省略
+			*/
+			
+		2. 内连接之非等值连接
+			案例：找出每个员工的薪资等级，要求显示员工名、薪资、薪资等级？
+			/*
+				select
+					e.ename, e.sal, grade 
+				from 
+					emp e
+				inner join
+					salgrade s
+				on
+					e.sal between s.losal and s.hisal;
+			*/
+			
+		3. 内连接之自连接
+			案例：查询员工的上级领导，要求显示员工名和对应的领导名？
+			/*
+				select 
+					a.ename as empoyee, b.ename as leader 
+				from 
+					emp as a 
+				join 
+					emp as b 
+				on 
+					a.empno = b.mgr;       //按b表顺序在a中查询
+			*/
+			
+		4. 外连接
+		
+			右外连接（right:表示将join关键字右边的这张表看成主表,在外连接当中，两张表产生了主次关系）
+			/*
+				select 
+					e.ename,d.dname
+				from
+					emp e 
+				right outer join 	// outer可省略
+					emp d
+				on
+					e.deptno = d.deptno;
+			*/		
+			
+			案例：查询每个员工的上级领导，要求显示所有员工的名字和领导名？
+			/*
+				select 
+					e.ename,d.ename
+				from
+					emp e 
+				left outer join 
+					emp d				
+				on
+					e.mgr = d.empno;
+			*/
+			
+		5. 多张表的连接（一条SQL中内连接和外连接可以混合出现）
+			/*
+				select ...from a
+				join
+					b
+				on
+					a和b的连接条件
+				join
+					c
+				on
+					a和c的连接条件
+				right join
+					d
+				on
+					a和d的连接条件
+			*/	
+			
+			案例：找出每个员工的部门名称以及工资等级，要求显示员工名、部门名、薪资、薪资等级？
+			/*
+				select 
+					a.ename, b.dname, a.sal, c.grade
+				from　
+					emp as a
+				left outer join 
+					dept as b
+				on 
+					a.deptno = b.deptno
+				left outer join
+					salgrade as c,
+				on 
+					a.sal between c.losal and c.hisal;
+			*/
+	
+	
+			案例：找出每个员工的部门名称以及工资等级，还有上级领导，要求显示员工名、领导名、部门名、薪资、薪资等级？
+			/*
+				select 
+					a.ename as empoyee, b.ename as leader , c.dname, a.sal, d.grade
+				from　
+					emp as a
+				inner join 
+					emp as b
+				on 
+					b.empno = a.mgr
+				left outer join
+					dept as c
+				on 
+					a.deptno = c.deptno
+				left outer join
+					salgrade as d,
+				on 
+					a.sal between d.losal and d.hisal;
+			*/
+	
+	h. 子查询
+		什么是子查询？
+			select语句中嵌套select语句，被嵌套的select语句称为子查询。
+		子查询都可以出现在哪里呢？
+			select
+				..(select).			//很少
+			from
+				..(select).
+			where
+				..(select).
+	
+		1 where子句中的子查询
+			案例：找出比最低工资高的员工姓名和工资？
+			/*
+				1.先找出最低工资
+				select 
+					min(sal)
+				from 
+					emp
+					
+					
+				2.出比最低工资高的员工姓名和工资
+				select 
+					ename,sal
+				from
+					emp
+				where
+					sal > (select min(sal) from emp)
+			*/
+			
+		2 from子句中的子查询 (from后面的子查询，可以将子查询的查询结果当做一张临时表)
+			案例：找出每个岗位的平均工资的薪资等级。
+			/*
+				1. 找出每个岗位的平均工资。
+				select 
+					job,avg(sal)
+				from
+					emp 
+				group by
+					job
+					
+					
+				2.找出每个岗位的平均工资的薪资等级。
+				select 
+					t.*, b.grade
+				from 
+					(select job,avg(sal) from emp group by job ) t 
+				join 
+					salgrade as b
+				on 
+				t.avgsal between b.losal and b.hisal;
+					
+			*/
+	
+		3 select后面出现的子查询（基本不用）
+	
+	i. union合并查询结果集
+		案例：查询工作岗位是MANAGER和SALESMAN的员工？
+		方法一：select ename,job from emp where job = 'MANAGER' or job = 'SALESMAN';
+	    
+		方法二：select ename,job from emp where job in('MANAGER','SALESMAN');
+	
+		方法三：
+			select ename,job from emp where job = 'MANAGER'
+			union
+			select ename,job from emp where job = 'SALESMAN';
+		
+		union的效率（方法三 10*10+10*10=200）比方法一、方法二（10*10*10=1000）的效率更加高效.
+
+	j. limit（非常重要）
+		完整用法：limit startIndex, length
+		其中，startIndex是起始下标(起始下标从0开始)，length是长度。
+	
+		案例: 按照薪资降序，取出排名在前5名的员工？
+		/*
+			select 
+				ename, sal
+			from 
+				emp
+			order by
+				sal desc
+			limit 0, 5;
+		*/
+		
+		案例：取出工资排名在[5-9]名的员工？
+		/*
+			select 
+				ename,sal
+			from
+				emp
+			order by 
+				sal desc
+			limit
+				4, 5;
+		*/
+	
+	k. 分页
+		/*
+			每页的显示：
+				limit (pageNo-1)*pageSize , pageSize
+		*/
+		
+		每页显示3条记录
+			第1页：limit 0,3		[0 1 2]
+			第2页：limit 3,3		[3 4 5]
+			第3页：limit 6,3		[6 7 8]
+			第4页：limit 9,3		[9 10 11]
+
+		每页显示pageSize条记录
+			第pageNo页：
+				limit (pageNo - 1) * pageSize  , pageSize
+				
+		JAVA中		
+		/*
+			public static void main(String[] args){
+				// 用户提交过来一个页码，以及每页显示的记录条数
+				int pageNo = 5; //第5页
+				int pageSize = 10; //每页显示10条
+
+				int startIndex = (pageNo - 1) * pageSize;
+				String sql = "select ...limit " + startIndex + ", " + pageSize;
+			}
+		*/
+			
+			
+			
+	
+总 结：
+	select 
+		...
+	from
+		...
+	where
+		...
+	group by
+		...
+	having
+		...
+	order by
+		...
+	limit
+		...
+	
+	执行顺序？
+		1.from
+		2.where
+		3.group by
+		4.having
+		5.select
+		6.order by
+		7.limit..
+	
+	
+	
+	
+	
+	
+	
+	

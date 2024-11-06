@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Class 笔记</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    h1, h2, h3 {
+      color: #333;
+    }
+    p {
+      line-height: 1.6;
+    }
+    pre {
+      background-color: #f8f8f8;
+      padding: 10px;
+      border: 1px solid #ddd;
+      overflow-x: auto;
+      margin-bottom: 20px;
+    }
+    code {
+      font-family: "Courier New", Courier, monospace;
+      color: #4566ca;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>JavaScript Class 笔记</h1>
+
+  <h2>1. 课程目标与介绍</h2>
+  <p>本节课的目标是进一步理解和运用 JavaScript 中的 <code>class</code> 概念，并将其应用到项目中，优化代码结构。</p>
+  <p>本次课程是第 15 节课，我们将用 <code>class</code> 取代传统的 <code>function</code> 来创建对象，并讨论如何通过 <code>class</code> 来管理复杂的数据和功能。</p>
+  <p><strong>重点：</strong> 从简单的 <code>function</code> 过渡到 <code>class</code>，并将 <code>class</code> 应用到项目中的对象创建和动态生成内容上。</p>
+
+  <h2>2. 上节课问题回顾</h2>
+  <p><strong>问题描述：</strong> 在上一节课中，我们在使用 <code>createProfile</code> 创建对象时，遇到了关于 <code>class</code> 使用的错误，主要是在对象创建时没有正确调用类的属性。</p>
+  <p><strong>解决方法：</strong> 为了避免错误，本节课我们将用 <code>class</code> 重新构建 <code>createProfile</code>，使代码更具结构性和灵活性。</p>
+
+  <h2>3. <code>class</code> 与 <code>function</code> 对比</h2>
+  <p>在 JavaScript 中，早期的对象创建方式通常是通过 <code>function</code> 生成对象，这样的方式虽然有效，但当对象结构变复杂时，维护和扩展性较差。<code>class</code> 的引入为我们提供了一种更为现代化的对象创建方式，特别适用于需要创建多个相似对象的场景。</p>
+
+  <h3>Function 方式的局限性：</h3>
+  <p>当我们通过函数创建多个对象时，每次都需要重新定义对象的属性和方法，代码冗余较大，无法方便地进行继承和扩展。</p>
+
+  <h3>代码示例（Function 方式）：</h3>
+  <pre><code>
+function createUser(name, age) {
+  return {
+    name: name,
+    age: age,
+    walk: function() {
+      console.log(`${this.name} is walking.`);
+    },
+    inform: function() {
+      console.log(`My name is ${this.name}, and I am ${this.age} years old.`);
+    }
+  };
+}
+
+const user1 = createUser('John', 25);
+user1.walk();  // 输出: John is walking.
+  </code></pre>
+  <p>在这种方式中，每次创建新用户时，<code>walk</code> 和 <code>inform</code> 方法都会重新定义，浪费了内存，也增加了代码的复杂性。</p>
+
+  <h3>Class 方式的优势：</h3>
+  <p><code>class</code> 提供了一种更结构化的方式来定义对象，允许我们通过 <code>constructor</code> 定义初始值，通过类内部的方法进行操作。通过 <code>new</code> 关键字，我们可以轻松创建多个对象，而无需每次重新定义方法。</p>
+
+  <h3>代码示例（Class 方式）：</h3>
+  <pre><code>
+class User {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+  
+  walk() {
+    console.log(`${this.name} is walking.`);
+  }
+
+  inform() {
+    console.log(`My name is ${this.name}, and I am ${this.age} years old.`);
+  }
+}
+
+const user2 = new User('Jane', 30);
+user2.walk();  // 输出: Jane is walking.
+  </code></pre>
+  <p><strong>总结：</strong> <code>class</code> 是一种封装对象属性和方法的更高效方式，尤其适合需要创建多个对象的情况。每个 <code>class</code> 定义了一组相同的属性和方法，实例化对象时只需调用 <code>constructor</code> 传入参数，简化了代码的复用性和可维护性。</p>
+
+  <h2>4. 深入理解 <code>class</code> 的构造器和方法</h2>
+  <p><strong>Constructor（构造器）：</strong> <code>constructor</code> 是类的特殊方法，用于初始化对象。当使用 <code>new</code> 关键字创建对象时，<code>constructor</code> 会被自动调用。通过 <code>constructor</code>，我们可以为对象分配初始属性值。</p>
+
+  <p>例如，当我们创建一个新的 <code>User</code> 对象时，<code>constructor</code> 会自动将传入的 <code>name</code> 和 <code>age</code> 赋值给对象的属性。</p>
+
+  <h3>代码示例：</h3>
+  <pre><code>
+class User {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+}
+
+const user = new User('Alice', 28);
+console.log(user.name);  // 输出: Alice
+console.log(user.age);   // 输出: 28
+  </code></pre>
+
+  <p><strong>Methods（方法）：</strong> <code>class</code> 中的方法是与对象属性一起封装的函数。例如，<code>walk</code> 和 <code>inform</code> 方法可以直接定义在 <code>User</code> 类中，每个通过 <code>new</code> 创建的实例都能共享这些方法，而不会重复定义。</p>
+
+  <h3>代码示例：</h3>
+  <pre><code>
+class User {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  walk() {
+    console.log(`${this.name} is walking.`);
+  }
+
+  inform() {
+    console.log(`My name is ${this.name}, and I am ${this.age} years old.`);
+  }
+}
+  </code></pre>
+
+  <h2>5. 使用 <code>class</code> 实例化多个对象</h2>
+  <p>当我们使用 <code>class</code> 时，创建多个对象非常简单。我们只需要通过 <code>new</code> 关键字实例化类，并传递必要的参数给 <code>constructor</code>。每个实例都是类的一个独立对象，拥有相同的属性和方法，但不同的值。</p>
+
+  <h3>代码示例：</h3>
+  <pre><code>
+const user1 = new User('John', 25);
+const user2 = new User('Jane', 30);
+
+user1.inform();  // 输出: My name is John, and I am 25 years old.
+user2.inform();  // 输出: My name is Jane, and I am 30 years old.
+  </code></pre>
+
+  <p>这种方式简化了对象的创建和管理，每次创建新对象时，只需传递不同的参数，而无需重复定义对象的结构。</p>
+
+  <h2>6. 使用 <code>class</code> 改造 <code>createProfile</code> 函数</h2>
+  <p>我们之前使用了 <code>function</code> 来生成个人资料的 <code>profile</code> 对象，这个 <code>function</code> 创建了一个包含图片、名称和描述的 <code>div</code>。现在我们用 <code>class</code> 重新构建这一逻辑，使其更加简洁和易于管理。</p>
+
+  <h3>函数版 <code>createProfile</code>：</h3>
+  <pre><code>
+function createProfile(imageSrc, name, inform) {
+  const profile = document.createElement('div');
+  profile.classList.add('profile');
+  profile.innerHTML = `
+    <div class="profile-photo">
+      <img src="${imageSrc}" alt="Profile Photo">
+    </div>
+    <div class="profile-description">
+      <h2>${name}</h2>
+      <p>${inform}</p>
+    `;
+  return profile;
+}
+
+document.body.appendChild(createProfile('path_to_image.jpg', 'John Doe', 'Web Developer'));
+  </code></pre>
+
+  <h3>改造为 <code>class</code>：</h3>
+  <p>使用 <code>class</code> 改造后，<code>Profile</code> 类负责生成个人资料，方法更加集中，代码更加模块化。</p>
+
+  <pre><code>
+class Profile {
+  constructor(imageSrc, name, inform) {
+    this.imageSrc = imageSrc;
+    this.name = name;
+    this.inform = inform;
+  }
+
+  build() {
+    const profile = document.createElement('div');
+    profile.classList.add('profile');
+    profile.innerHTML = `
+      <div class="profile-photo">
+        <img src="${this.imageSrc}" alt="Profile Photo">
+      </div>
+      <div class="profile-description">
+        <h2>${this.name}</h2>
+        <p>${this.inform}</p>
+      `;
+    return profile;
+  }
+}
+
+const profile1 = new Profile('path_to_image.jpg', 'John Doe', 'Web Developer');
+document.body.appendChild(profile1.build());
+  </code></pre>
+
+  <h2>7. 创建多个对象实例</h2>
+  <p>使用 <code>class</code>，可以通过传递不同的参数轻松创建多个 <code>profile</code> 对象。</p>
+
+  <h3>代码示例：</h3>
+  <pre><code>
+const profile2 = new Profile('path_to_another_image.jpg', 'Jane Smith', 'Designer');
+document.body.appendChild(profile2.build());
+  </code></pre>
+
+  <h2>8. 作业</h2>
+  <p><strong>任务：</strong> 将现有的 <code>createPost</code> 逻辑改造为 <code>class</code> 实现。</p>
+
+</div>
+
+</body>
+</html>

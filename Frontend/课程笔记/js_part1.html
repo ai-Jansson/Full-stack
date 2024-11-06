@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Course Notes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        .code-block {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-left: 5px solid #ccc;
+            margin-bottom: 20px;
+        }
+        .output {
+            background-color: #e7f7ff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>JavaScript Course Notes</h1>
+
+    <h2>1. 课程安排</h2>
+    <p>今天讲的是 JavaScript（JS），重点在于 JS 和 Node.js 的结合，后续项目会与媒体相关，但媒体部分暂时不详细讲解。</p>
+    <p>我们将使用 Node.js 构建一个项目，可以选择新建项目或者复用已有项目。</p>
+
+    <h2>2. Console 基础操作</h2>
+    <p><strong>console.clear()</strong>: 清空控制台的输出。</p>
+    <div class="code-block">
+        <pre><code>console.clear();</code></pre>
+    </div>
+
+    <p><strong>console.log()</strong>: 打印信息到控制台。可以用 <code>console.log()</code> 在控制台输出自定义信息或变量。</p>
+    <div class="code-block">
+        <pre><code>console.log('====== Start ======');<br>console.log('====== End ======');</code></pre>
+    </div>
+
+    <h2>3. 变量和作用域</h2>
+    <p><strong>使用 let 声明变量：</strong> <code>let</code> 声明的变量只能在其所在的块中使用，并且可以修改值。</p>
+    <div class="code-block">
+        <pre><code>let a = 1;<br>console.log(a);  // 输出: 1<br>a = 2;<br>console.log(a);  // 输出: 2</code></pre>
+    </div>
+
+    <p><strong>使用 var 声明变量：</strong> <code>var</code> 声明的变量可以在同一个作用域内重新声明，存在变量提升（hoisting）问题。</p>
+    <div class="code-block">
+        <pre><code>var b = 1;<br>console.log(b);  // 输出: 1<br>var b = 2;       // 允许重新声明<br>console.log(b);  // 输出: 2</code></pre>
+    </div>
+
+    <h2>4. 交换变量的值</h2>
+    <p>使用第三个变量来交换两个变量的值：</p>
+    <div class="code-block">
+        <pre><code>let p = 5;<br>let q = 6;<br><br>let temp = p;<br>p = q;<br>q = temp;<br><br>console.log(p);  // 输出: 6<br>console.log(q);  // 输出: 5</code></pre>
+    </div>
+
+    <h2>5. 变量提升（Hoisting）</h2>
+    <p>使用 <code>var</code> 声明的变量会进行提升，而 <code>let</code> 和 <code>const</code> 不会。</p>
+    <div class="code-block">
+        <pre><code>console.log(a);  // 输出: undefined<br>var a = 5;<br><br>console.log(b);  // 会报错，因为 `let` 不会提升<br>let b = 10;</code></pre>
+    </div>
+
+    <h2>6. 常量和变量</h2>
+    <p><strong>const 声明常量：</strong> <code>const</code> 定义的常量不能修改，但可以在初始化时赋值其他变量的值：</p>
+    <div class="code-block">
+        <pre><code>const a = 10;<br>// a = 20;   // 报错：常量不能重新赋值</code></pre>
+    </div>
+
+    <h2>7. 隐式类型转换</h2>
+    <p><strong>加法运算：</strong> 如果字符串和数字相加，结果会转换为字符串：</p>
+    <div class="code-block">
+        <pre><code>let result = '1' + 2;<br>console.log(result);  // 输出: '12' (字符串)</code></pre>
+    </div>
+
+    <p><strong>减法运算：</strong> 如果数字和字符串进行减法，字符串会转换为数字进行计算：</p>
+    <div class="code-block">
+        <pre><code>let result = '5' - 2;<br>console.log(result);  // 输出: 3 (数字)</code></pre>
+    </div>
+
+    <h2>8. 布尔值与判断</h2>
+    <p><strong>布尔值：</strong> <code>true</code> 和 <code>false</code> 是布尔类型，用于逻辑判断。</p>
+    <div class="code-block">
+        <pre><code>let isAdult = true;<br>if (isAdult) {<br>&nbsp;&nbsp;console.log('You are an adult');<br>} else {<br>&nbsp;&nbsp;console.log('You are not an adult');<br>}</code></pre>
+    </div>
+
+    <p><strong>双等号（==）和三等号（===）：</strong></p>
+    <div class="code-block">
+        <pre><code>console.log(1 == '1');  // 输出: true<br>console.log(1 === '1');  // 输出: false</code></pre>
+    </div>
+
+    <h2>9. 循环结构</h2>
+    <p><strong>while 循环：</strong> <code>while</code> 循环会一直执行，直到条件为 <code>false</code>。</p>
+    <div class="code-block">
+        <pre><code>let i = 1;<br>let q = 10;<br>while (i <= q) {<br>&nbsp;&nbsp;console.log(i);<br>&nbsp;&nbsp;i++;<br>}</code></pre>
+    </div>
+
+    <p><strong>for 循环：</strong> <code>for</code> 循环更简洁，可以将初始化、条件和增量操作合并在一行：</p>
+    <div class="code-block">
+        <pre><code>for (let i = 1; i <= 10; i++) {<br>&nbsp;&nbsp;console.log(i);<br>}</code></pre>
+    </div>
+
+    <h2>9. 九九乘法表</h2>
+    <p>使用 <code>for</code> 循环嵌套输出九九乘法表：</p>
+    <div class="code-block">
+        <pre><code>for (let i = 1; i <= 9; i++) {<br>&nbsp;&nbsp;for (let j = 1; j <= i; j++) {<br>&nbsp;&nbsp;&nbsp;&nbsp;console.log(`${i} * ${j} = ${i * j}`);<br>&nbsp;&nbsp;}<br>}</code></pre>
+    </div>
+
+    <h2>10. DOM 操作</h2>
+    <p>修改网页内容，通过 JavaScript 可以操作 DOM 元素，将内容写入网页：</p>
+    <div class="code-block">
+        <pre><code>&lt;div id="app"&gt;&lt;/div&gt;</code></pre>
+    </div>
+    <p>使用 JavaScript 修改 <code>app</code> 元素的内容：</p>
+    <div class="code-block">
+        <pre><code>const message = 'Hello World';<br>const domElement = document.querySelector('#app');<br>domElement.textContent = message;</code></pre>
+    </div>
+
+    <h2>11. 总结与作业</h2>
+    <p>1. 使用循环嵌套输出九九乘法表。</p>
+    <p>2. 思考如何不使用第三个变量来交换两个变量的值。</p>
+    <p>3. 如何通过 JavaScript 将循环结果直接显示在网页中。</p>
+
+    <h2>循环嵌套九九乘法表</h2>
+    <p>使用 JavaScript 将九九乘法表的结果显示在网页中：</p>
+    <div id="multiplication-table"></div>
+
+    <script>
+        // 输出九九乘法表到网页中
+        const multiplicationTableElement = document.getElementById('multiplication-table');
+        let tableContent = '<h3>九九乘法表</h3><table border="1" cellspacing="0" cellpadding="5">';
+
+        for (let i = 1; i <= 9; i++) {
+            tableContent += '<tr>';
+            for (let j = 1; j <= i; j++) {
+                tableContent += `<td>${i} * ${j} = ${i * j}</td>`;
+            }
+            tableContent += '</tr>';
+        }
+
+        tableContent += '</table>';
+        multiplicationTableElement.innerHTML = tableContent;
+
+        // 修改 DOM 元素示例
+        const message = 'Hello World';
+        const domElement = document.querySelector('#app');
+        domElement.textContent = message;
+    </script>
+
+    <h2>DOM 操作示例</h2>
+    <div id="app" class="output"></div>
+
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS 课程详细笔记</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1, h2, h3, h4 {
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        code {
+            background-color: #333;
+            color: #fff;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        pre {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+
+        .note-section {
+            margin-bottom: 2rem;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>CSS 课程详细笔记（结合代码）</h1>
+
+    <div class="note-section">
+        <h2>课程导入与背景介绍</h2>
+        <p>主要使用的资料是一份 PDF 格式的 Flexbox 解析图纸。Flexbox（Flexible Box）布局是一种 CSS3 布局模型，用于在容器内有效地分配空间和排列项目。它解决了传统布局方式（如浮动布局和表格布局）的局限性，尤其适用于一维布局（单行或单列布局）。</p>
+    </div>
+
+    <div class="note-section">
+        <h2>Flexbox 布局的特点与基本属性</h2>
+        <p><strong>Flexbox 的特点：</strong></p>
+        <ul>
+            <li><strong>灵活性：</strong>Flexbox 可以动态调整容器内的项目大小和位置，以适应不同的屏幕尺寸和分辨率。</li>
+            <li><strong>简化布局代码：</strong>与传统的浮动布局相比，Flexbox 使复杂的布局更容易实现，减少了 CSS 代码的冗余。</li>
+            <li><strong>响应式设计：</strong>Flexbox 的属性能够帮助创建响应式布局，使得网页在不同设备上都有良好的显示效果。</li>
+        </ul>
+    </div>
+
+    <div class="note-section">
+        <h3>1. Flexbox 基本属性和用法</h3>
+        <h4>1.1 创建 Flex 容器</h4>
+        <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;link rel="stylesheet" href="styles.css"&gt;
+  &lt;title&gt;Flexbox Demo&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id="app"&gt;
+    &lt;div class="item"&gt;A&lt;/div&gt;
+    &lt;div class="item"&gt;B&lt;/div&gt;
+    &lt;div class="item"&gt;C&lt;/div&gt;
+    &lt;div class="item"&gt;D&lt;/div&gt;
+    &lt;div class="item"&gt;E&lt;/div&gt;
+    &lt;div class="item"&gt;F&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        <p>在上述 HTML 结构中，我们创建了一个包含 6 个子元素的 div 容器（id="app"）。这些子元素将被设置为 Flex 项目。</p>
+
+        <h4>1.2 基础样式设置</h4>
+        <pre><code>/* styles.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+#app {
+  display: flex;
+  width: 80%;
+  max-width: 1200px;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}</code></pre>
+        <p>在上述 CSS 样式中，我们对所有元素进行了全局样式重置，设置了 margin 和 padding 为 0，并使用 <code>box-sizing: border-box</code> 以便包括内边距和边框在内的宽度和高度计算。</p>
+        <p><code>display: flex</code>：将 #app 设为 Flex 容器，使其子元素（.item）成为 Flex 项目。</p>
+
+        <h4>1.3 Flex 容器的方向与对齐方式</h4>
+        <pre><code>#app {
+  display: flex; /* 定义为 Flex 容器 */
+  flex-direction: row; /* 主轴方向为水平方向（默认值） */
+  justify-content: flex-start; /* 主轴方向上的对齐方式 */
+  align-items: flex-start; /* 交叉轴方向上的对齐方式 */
+}</code></pre>
+        <p><code>flex-direction</code>：定义主轴的方向。<code>row</code> 是默认值，表示项目沿水平方向从左到右排列。<code>column</code> 则表示沿垂直方向从上到下排列。</p>
+        <p><code>justify-content</code>：定义项目在主轴方向上的对齐方式。常用值包括：</p>
+        <ul>
+            <li><code>flex-start</code>：项目从主轴起点对齐（默认值）。</li>
+            <li><code>flex-end</code>：项目从主轴终点对齐。</li>
+            <li><code>center</code>：项目居中对齐。</li>
+            <li><code>space-between</code>：项目均匀分布，第一个项目在起点，最后一个项目在终点。</li>
+            <li><code>space-around</code>：项目均匀分布，每个项目两侧的间距相等。</li>
+        </ul>
+        <p><code>align-items</code>：定义项目在交叉轴上的对齐方式。常用值包括：</p>
+        <ul>
+            <li><code>flex-start</code>：项目从交叉轴起点对齐。</li>
+            <li><code>flex-end</code>：项目从交叉轴终点对齐。</li>
+            <li><code>center</code>：项目在交叉轴上居中对齐。</li>
+            <li><code>baseline</code>：项目的基线对齐。</li>
+            <li><code>stretch</code>：项目在交叉轴上拉伸以填满容器（默认值）。</li>
+        </ul>
+
+        <h4>1.4 项目间距与换行</h4>
+        <pre><code>#app {
+  display: flex;
+  flex-wrap: wrap; /* 允许换行 */
+  gap: 20px; /* 设置项目间距 */
+}</code></pre>
+        <p><code>flex-wrap</code>：定义项目是否在主轴方向上换行。常用值包括：</p>
+        <ul>
+            <li><code>nowrap</code>：不换行，所有项目都在一行显示（默认值）。</li>
+            <li><code>wrap</code>：如果项目超出容器宽度，项目将换行显示。</li>
+            <li><code>wrap-reverse</code>：与 <code>wrap</code> 类似，但换行的方向相反。</li>
+        </ul>
+        <p><code>gap</code>：定义项目之间的间距。</p>
+
+        <h4>1.5 项目的增长、收缩与基础大小</h4>
+        <pre><code>.item {
+  flex-grow: 1; /* 项目将会平分容器的剩余空间 */
+  flex-shrink: 1; /* 项目可以缩小以适应容器 */
+  flex-basis: 200px; /* 项目的基础大小 */
+}
+</code></pre>
+<p><code>flex-grow</code>：定义项目在主轴方向上如何扩展空间。默认值为 0，表示项目不会扩展。如果设置为 1，项目将在剩余空间中等比例扩展。</p>
+<p><code>flex-shrink</code>：定义项目在主轴方向上如何收缩空间。默认值为 1，表示项目会收缩以适应容器。如果设置为 0，项目将不会收缩。</p>
+<p><code>flex-basis</code>：定义项目的初始主轴大小，可以使用任何 CSS 长度单位（例如 px、em、rem 等）。<code>flex-basis</code> 会覆盖项目的宽度或高度（取决于 <code>flex-direction</code>），并作为 <code>flex-grow</code> 和 <code>flex-shrink</code> 的计算基准。</p>
+</div>
+
+<div class="note-section">
+<h4>1.6 单个项目的对齐与顺序调整</h4>
+<pre><code>.item:nth-child(2) {
+align-self: center; /* 单独设置第二个项目在交叉轴上的对齐方式 */
+order: 1; /* 将第二个项目设置为第一个 */
+}
+</code></pre>
+<p><code>align-self</code>：允许单个 Flex 项目的对齐方式不同于其他项目。默认值为 <code>auto</code>，表示继承 <code>align-items</code> 的值。</p>
+<p><code>order</code>：定义项目的显示顺序。默认值为 0，可以设置正负值，数值越小的项目显示越靠前。</p>
+</div>
+
+<div class="note-section">
+<h2>Flexbox 布局的综合应用</h2>
+<p>通过以上的代码示例和解释，学生可以理解如何使用 Flexbox 属性实现各种布局效果。下面是一些综合应用的示例：</p>
+
+<h4>2.1 创建一个简单的导航栏</h4>
+<pre><code>&lt;nav&gt;
+&lt;ul class="navbar"&gt;
+&lt;li&gt;Home&lt;/li&gt;
+&lt;li&gt;About&lt;/li&gt;
+&lt;li&gt;Services&lt;/li&gt;
+&lt;li&gt;Contact&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/nav&gt;
+</code></pre>
+<pre><code>.navbar {
+display: flex;
+justify-content: space-between; /* 项目均匀分布，首尾项目贴边 */
+background-color: #333;
+padding: 1rem;
+list-style: none;
+}
+
+.navbar li {
+color: white;
+font-size: 1.2rem;
+}
+</code></pre>
+<p>在此示例中，Flexbox 被用来创建一个简单的水平导航栏，菜单项之间均匀分布，并在首尾各贴边。</p>
+
+<h4>2.2 实现一个自适应卡片布局</h4>
+<pre><code>&lt;div class="card-container"&gt;
+&lt;div class="card"&gt;Card 1&lt;/div&gt;
+&lt;div class="card"&gt;Card 2&lt;/div&gt;
+&lt;div class="card"&gt;Card 3&lt;/div&gt;
+&lt;div class="card"&gt;Card 4&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code>.card-container {
+display: flex;
+flex-wrap: wrap; /* 项目超出容器宽度时换行 */
+gap: 20px; /* 卡片之间的间距 */
+justify-content: center; /* 卡片居中对齐 */
+}
+
+.card {
+flex: 1 1 200px; /* 设置卡片的增长、收缩和基础大小 */
+background-color: #f9f9f9;
+border: 1px solid #ddd;
+border-radius: 8px;
+padding: 1rem;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+</code></pre>
+<p><code>flex-wrap: wrap</code>：允许卡片在容器宽度不足时换行，保证布局的弹性。</p>
+<p><code>gap: 20px</code>：设置卡片之间的间距。</p>
+<p><code>flex: 1 1 200px</code>：结合了 <code>flex-grow</code>、<code>flex-shrink</code> 和 <code>flex-basis</code> 属性，使得每个卡片的基础大小为 200px，可以根据需要增长或收缩。</p>
+
+<h4>2.3 创建一个响应式的侧边栏布局</h4>
+<pre><code>&lt;div class="layout"&gt;
+&lt;aside class="sidebar"&gt;Sidebar&lt;/aside&gt;
+&lt;main class="content"&gt;
+&lt;h1&gt;Main Content&lt;/h1&gt;
+&lt;p&gt;This is the main content area.&lt;/p&gt;
+&lt;/main&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code>.layout {
+display: flex;
+flex-wrap: nowrap; /* 禁止换行，确保侧边栏和内容区域在一行 */
+height: 100vh; /* 全屏高度 */
+}
+
+.sidebar {
+flex: 0 0 250px; /* 固定宽度的侧边栏 */
+background-color: #333;
+color: white;
+padding: 1rem;
+}
+
+.content {
+flex: 1; /* 自适应宽度的内容区域 */
+padding: 1rem;
+background-color: #f4f4f4;
+}
+</code></pre>
+<p><code>flex-wrap: nowrap</code>：禁用换行，确保侧边栏和内容区域保持在同一行。</p>
+<p><code>.sidebar</code>：设置侧边栏的宽度为 250px，并不允许扩展或收缩。</p>
+<p><code>.content</code>：内容区域设置为 <code>flex: 1</code>，表示它将占据所有剩余的可用空间。</p>
+
+<h4>2.4 制作一个复杂的网格布局</h4>
+<pre><code>&lt;div class="grid"&gt;
+&lt;div class="grid-item"&gt;Item 1&lt;/div&gt;
+&lt;div class="grid-item"&gt;Item 2&lt;/div&gt;
+&lt;div class="grid-item"&gt;Item 3&lt;/div&gt;
+&lt;div class="grid-item"&gt;Item 4&lt;/div&gt;
+&lt;div class="grid-item"&gt;Item 5&lt;/div&gt;
+&lt;div class="grid-item"&gt;Item 6&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code>.grid {
+display: flex;
+flex-wrap: wrap;
+gap: 10px;
+}
+
+.grid-item {
+flex: 1 1 calc(33.333% - 20px); /* 三等分宽度减去间隙 */
+background-color: #ececec;
+padding: 20px;
+box-sizing: border-box;
+}
+</code></pre>
+<p><code>flex: 1 1 calc(33.333% - 20px)</code>：每个网格项的宽度设为容器宽度的三分之一，减去 <code>gap</code> 的一部分。</p>
+<p><code>calc</code>：CSS 函数，用于动态计算长度值，支持基本的数学运算。</p>
+<p><code>flex-wrap: wrap</code>：项目换行，确保在不同屏幕尺寸下的自适应。</p>
+
+<h4>2.5 创建一个具有 sticky footer 的页面布局</h4>
+<pre><code>&lt;div class="page-container"&gt;
+&lt;header class="header"&gt;Header&lt;/header&gt;
+&lt;main class="main-content"&gt;Main Content&lt;/main&gt;
+&lt;footer class="footer"&gt;Footer&lt;/footer&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code>html, body {
+margin: 0;
+padding: 0;
+height: 100%;
+}
+
+.page-container {
+display: flex;
+flex-direction: column;
+min-height: 100vh;
+}
+
+.header {
+background-color: #4CAF50;
+color: white;
+text-align: center;
+padding: 1rem;
+}
+
+.main-content {
+flex: 1; /* 自适应高度 */
+padding: 2rem;
+background-color: #f0f0f0;
+}
+
+.footer {
+background-color: #333;
+color: white;
+text-align: center;
+padding: 1rem;
+}
+</code></pre>
+      <p><code>flex-direction: column</code>：设置 Flex 容器的主轴为垂直方向（列）。</p>
+      <p><code>min-height: 100vh</code>：容器的最小高度为 100% 的视口高度，确保页脚固定在底部。</p>
+      <p><code>flex: 1</code>：内容区域自适应高度，占据所有剩余空间，使页脚始终在页面底部。</p>
+  </div>
+
+  <div class="note-section">
+      <h2>总结</h2>
+      <p>通过这些综合应用示例，学生可以更好地理解如何利用 Flexbox 属性创建各种复杂而灵活的布局。Flexbox 布局模型提供了强大的功能，能够简化 CSS 代码并提高网页的响应性和用户体验。熟练掌握这些技巧，能够让开发者更高效地构建现代化的 Web 页面。</p>
+  </div>
+</body>
+</html>

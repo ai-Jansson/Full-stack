@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 课后笔记</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        h1, h2 {
+            color: #4A90E2;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        pre {
+            background-color: #eee;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            color: #c7254e;
+            background-color: #f9f2f4;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+        }
+        .note {
+            background-color: #f0f8ff;
+            padding: 10px;
+            border-left: 4px solid #4A90E2;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .code-title {
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>JavaScript 课后笔记</h1>
+        
+        <h2>1. 思维导图</h2>
+        <p>在这节课的开始，老师提醒大家先查看提供的网址中的思维导图。这一思维导图详细整理了 JavaScript (JS) 的内容，覆盖了大部分的知识点。老师建议大家随时回顾总结导图内容，并确保能够正常访问该网址。</p>
+
+        <h2>2. 回顾上节课内容</h2>
+        <p><strong>变量类型：</strong>讲解了 <code>var</code> 和 <code>let</code> 的区别，尤其是作用域与变量提升的不同。</p>
+        <p><strong>作业：</strong>作业内容是如何不使用第三个变量来交换两个变量的值。通过加减运算可以实现变量的交换。</p>
+        <p class="code-title">代码示例：</p>
+        <pre><code>let p = 5;
+let q = 10;
+p = p + q; // p = 15
+q = p - q; // q = 5
+p = p - q; // p = 10
+
+console.log(`p = ${p}, q = ${q}`);  // 输出 p = 10, q = 5</code></pre>
+
+        <h2>3. 数字与字符串的类型转换</h2>
+        <p>讨论了数字与字符串的转换，特别是隐式类型转换在加法和减法中的不同处理。</p>
+        <p><strong>加法：</strong>字符串与数字相加时，结果是字符串拼接。</p>
+        <p><strong>减法：</strong>字符串与数字相减时，字符串会隐式转换为数字。</p>
+        <p class="code-title">代码示例：</p>
+        <pre><code>let result = '1' + 2;  // 输出 '12'，字符串拼接
+let result2 = '5' - 2; // 输出 3，数字运算</code></pre>
+
+        <h2>4. 布尔运算与条件判断</h2>
+        <p><strong>等号比较：</strong></p>
+        <ul>
+            <li><code>==</code>：只比较值，不比较类型。</li>
+            <li><code>===</code>：同时比较值和类型。</li>
+        </ul>
+        <p class="code-title">代码示例：</p>
+        <pre><code>let x = 5;
+let y = "5";
+
+console.log(x == y);  // 输出：true
+console.log(x === y); // 输出：false</code></pre>
+
+        <h2>5. 循环与分支</h2>
+        <p>讲解了如何使用嵌套循环实现九九乘法表，并解释了 <code>continue</code> 和 <code>break</code> 的使用。</p>
+        <p class="code-title">九九乘法表代码示例：</p>
+        <pre><code>for (let i = 1; i <= 9; i++) {
+  for (let j = 1; j <= i; j++) {
+    console.log(`${i} * ${j} = ${i * j}`);
+  }
+}</code></pre>
+
+        <h2>6. 逻辑运算与布尔值</h2>
+        <p>讨论了如何进行真假值转换，以及如何使用两个 <code>!</code> 来强制转换布尔值。</p>
+        <p class="code-title">代码示例：</p>
+        <pre><code>let x = 0;
+console.log(!!x);  // 输出 false
+
+let y = 1;
+console.log(!!y);  // 输出 true</code></pre>
+
+        <h2>7. 数组（Array）操作</h2>
+        <p>讲解了数组的基础操作，如获取数组的长度和使用索引访问元素。</p>
+        <p class="code-title">代码示例：</p>
+        <pre><code>let array = [1, 2, 3, "hello", true];
+console.log(array[0]);  // 输出 1</code></pre>
+
+        <h2>8. 复杂类型与浅复制</h2>
+        <p>复杂类型（如数组和对象）的复制是引用传递而不是值传递，因此改变副本中的内容会影响到原数组。</p>
+        <p class="code-title">代码示例：</p>
+        <pre><code>let array1 = [1, 2, 3];
+let array2 = array1;
+array2[0] = 100;
+console.log(array1[0]);  // 输出 100</code></pre>
+
+        <h2>9. 栈与队列</h2>
+        <p><strong>栈：</strong>后进先出（LIFO），使用 <code>push()</code> 和 <code>pop()</code> 操作。</p>
+        <p><strong>队列：</strong>先进先出（FIFO），使用 <code>unshift()</code> 和 <code>shift()</code> 操作。</p>
+        <p class="code-title">代码示例：</p>
+        <pre><code>// 栈操作
+let stack = [];
+stack.push(1);
+stack.push(2);
+console.log(stack.pop());  // 输出 2
+
+// 队列操作
+let queue = [];
+queue.unshift(1);
+queue.unshift(2);
+console.log(queue.shift());  // 输出 2</code></pre>
+
+        <h2>10. 作业</h2>
+        <ul>
+            <li>使用循环嵌套输出九九乘法表。</li>
+            <li>思考如何不使用第三个变量来交换两个变量的值。</li>
+            <li>掌握数组的遍历方法，并理解复杂类型的浅复制问题。</li>
+        </ul>
+    </div>
+</body>
+</html>

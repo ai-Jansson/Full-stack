@@ -1,0 +1,21 @@
+Stack Overflow 					最大的程序员问答社区之一 涵盖各种编程语言和技术
+GitHub 						代码托管平台，也是开源社区 可以分享项目、参与开源开发
+Reddit（特别是 r/webdev, r/programming 等子版块）	讨论各种编程话题的社区
+DEV Community (dev.to) 				面向开发者的博客平台和社区
+CodePen 						前端代码分享和展示平台
+FreeCodeCamp					免费学习编程的平台，有活跃的社区
+Hacker News 					技术新闻和讨论平台
+Medium（技术专栏）				有许多高质量的技术文章和教程
+
+
+国内平台：
+掘金      				面向开发者的技术社区
+SegmentFault     			问答社区和技术博客平台
+CSDN       			老牌的程序员社区和博客平台
+V2EX     				创意工作者社区，包括很多程序员
+知乎（特别是编程相关话题）       	综合问答平台，有很多技术相关讨论
+开源中国（OSChina）        	 	开源软件社区和资讯平台
+InfoQ 中文站       		 	软件开发领域的新闻、文章和视频
+简书（技术专栏）         	 	写作平台，有很多技术博客
+蒲公英开发者社区        	 	移动开发者社区
+LearnKu（Laravel China 社区）  	主要针对 PHP 和 Laravel 开发者

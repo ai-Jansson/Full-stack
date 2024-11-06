@@ -1,0 +1,186 @@
+
+学习MYSQL主要还是学习通用的SQL语句，那么SQL语句包括增删改查，主要划分：
+	DQL：（数据查询语言）： 查询语句，凡是select语句都是DQL;
+	DML（数据操作语言）： insert delete update， 对表当中的数据进行增删改查
+	DDL（数据定义语言）： create drop alter truncate ，对表结构进行增删改
+	TCL(事务控制语言)： commit提交事务 rollback回滚事务。(TCL中T是Transaction)
+	DCL(数据控制语言)： grant授权、revoke撤销权限等
+	
+	命名规范：
+		所有的标识符都是全部小写，单词和单词之间使用下划线进行衔接。
+		
+DML
+	1. insert
+		a.插入数据
+			语法格式：
+			/*
+				insert into 
+				表名
+					(字段名1,字段名2,字段名3...) 
+				values
+					(值1,值2,值3);
+			*/
+			
+			注意：字段名和值要一一对应。数量、数据类型要对应。
+			注意：insert语句但凡是执行成功了，那么必然会多一条记录。
+			
+			没有给其它字段指定值的话，默认值是NULL。后面赋值可更改
+			mysql> desc t_student;
+			+-------+--------------+------+-----+---------+-------+
+			| Field | Type         | Null | Key | Default | Extra |
+			+-------+--------------+------+-----+---------+-------+
+			| no    | varchar(255) | YES  |     | NULL    |       |
+			| name  | varchar(255) | YES  |     | NULL    |       |
+			| age   | char(3)      | YES  |     | NULL    |       |
+			| sex   | char(1)      | YES  |     | NULL    |       |
+			+-------+--------------+------+-----+---------+-------+
+			4 rows in set (1.75 sec)
+			
+			insert语句中的“字段名”可以省略
+			
+			insert into t_student values(2); //错误的
+
+			// 注意：前面的字段名省略的话，等于都写上了！所以值也要都写上！
+			insert into t_student values(2, 'lisi', 'f', 20, 'lisi@123.com');
+		
+		b.插入日期
+		str_to_date： 多用于将字符串转换成日期。
+			Mysql的日期格式:
+			%Y(大写)	年
+			%m 		月
+			%d		日
+			%h		时
+			%i		分
+			%s		秒
+				
+			/*
+				create table t_user (
+					id int, 
+					name varchar(32),
+					birth char(10)			
+				);
+				
+				insert into 
+					u_user (
+						id, name, birth)
+					values (
+						1, yeh, str_to_date（'1990-1-2'，'%Y-%m-%d'）
+					）；		
+			*/
+			
+			如果提供的日期字符串是 %Y-%m-%d 格式，str_to_date函数就不需要了
+			/*
+			
+				insert into t_user (id, name, birth)
+				values (1,yeh,'1990-01-02')
+			*/
+			
+		date_format：通常使用在查询日期方面。设置展示的日期格式。
+
+			/*
+				select 
+					id,name,date_format(birth, '%m/%d/%Y') as birth 
+				from 
+					t_user;
+			*/
+		
+			实际上SQL语句中默认的日期格式化，自动将数据库中的date类型转换成varchar类型。
+			即
+			/*
+				select 
+					id, name, birth 
+				from
+					t_user;
+			*/
+			
+			案例：关于系统时间
+			/*
+				insert into 
+					t_user(id, name, birth) 
+				values 
+					(1, 'yeh', now());
+			*/
+			
+		c.insert插入多条记录
+		 语法：
+			/*
+			insert into 
+				t_user (字段名1,字段名2) 
+				values (),(),(),();
+				
+				
+				
+			insert into t_user(id,name,birth,create_time) values
+			(1,'zs','1980-10-11',now()), 
+			(2,'lisi','1981-10-11',now()),
+			(3,'wangwu','1982-10-11',now());
+			*/
+		
+		d. 将查询结果插入到一张表当中
+			insert into dept_bak select * from dept; //很少用！
+			
+	2. update 
+	
+		语法格式：
+		/*
+			update 
+				表名 
+			set 
+				字段名1=值1,字段名2=值2,字段名3=值3... 
+			where 
+				条件;
+		*/
+		注意：没有条件限制会导致所有数据全部更新。
+			
+	3. delete
+	
+		语法格式:
+		/*
+			delete from 
+				表名 
+			where 
+				条件;
+		*/
+		注意：没有条件，整张表的数据会全部删除！
+		
+	4. truncate
+
+		delete from dept_bak; //这种删除数据的方式比较慢。
+		
+		delete语句删除数据的原理？（delete属于DML语句！！！）
+		表中的数据被删除了，但是这个数据在硬盘上的真实存储空间不会被释放！！！
+		这种删除缺点是：删除效率比较低。
+		这种删除优点是：支持回滚，后悔了可以再恢复数据！！！（rollback 命令）
+		
+		truncate语句删除数据的原理？
+		这种删除效率比较高，表被一次截断，物理删除。
+		这种删除缺点：不支持回滚。
+		这种删除优点：快速。
+
+		用法：truncate table dept_bak; （这种操作属于DDL操作。）
+		
+		大表非常大，上亿条记录？？？？
+		删除的时候，使用delete，也许需要执行1个小时才能删除完！效率较低。
+		可以选择使用truncate删除表中的数据。只需要不到1秒钟的时间就删除结束。效率较高。
+		但是使用truncate之前，必须仔细询问客户是否真的要删除，并警告删除之后不可恢复！
+
+		truncate是删除表中的数据，表还在！
+	
+		删除表操作？
+		drop table 表名; // 这不是删除表中的数据，这是把表删除。
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

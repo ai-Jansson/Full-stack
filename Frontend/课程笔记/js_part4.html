@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript、HTML、CSS 综合操作 Demo - 课程详细笔记</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        line-height: 1.6;
+        padding: 20px;
+      }
+      h1,
+      h2 {
+        color: #333;
+      }
+      code {
+        background-color: #f4f4f4;
+        padding: 5px;
+        border-radius: 5px;
+      }
+      pre {
+        background-color: #f4f4f4;
+        padding: 10px;
+        border-left: 3px solid #ccc;
+        overflow-x: auto;
+      }
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .card-group {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 400px;
+      }
+      .card {
+        width: 20rem;
+        aspect-ratio: 2 / 3;
+        background-size: cover;
+        background-position: center;
+        box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5);
+        transition: all 0.5s ease;
+      }
+      .button-group {
+        position: absolute;
+        bottom: 10px;
+        display: flex;
+        gap: 2rem;
+      }
+      .button {
+        width: 4rem;
+        aspect-ratio: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #6b8692;
+        border-radius: 50%;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        cursor: pointer;
+        transition: background-color 0.3s, box-shadow 0.3s;
+      }
+      .button:active {
+        background-color: #9eb1bf;
+        box-shadow: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>JavaScript、HTML、CSS 综合操作 Demo</h1>
+      <h2>### 课程详细笔记</h2>
+
+      <h2>1. 项目背景与功能</h2>
+      <p>
+        我们今天将展示一个结合了 <strong>JavaScript</strong>、<strong
+          >HTML</strong
+        >
+        和
+        <strong>CSS</strong>
+        的前端项目，该项目展示了如何通过这些技术搭建一个功能完整的页面。
+      </p>
+      <p>项目功能包括：</p>
+      <ul>
+        <li>左右两个按钮，用于切换图片。</li>
+        <li>切换图片时会有平滑的过渡动画。</li>
+        <li>
+          图片与按钮的动态加载和布局都由 JavaScript 控制，CSS 负责样式美化。
+        </li>
+      </ul>
+
+      <h2>2. 项目环境配置</h2>
+      <p><strong>项目创建：</strong></p>
+      <ul>
+        <li>创建项目目录 <code>Project13</code>。</li>
+        <li>安装 SASS：</li>
+        <pre><code>yarn add sass</code></pre>
+        <li>创建项目目录结构：</li>
+        <pre><code>Project13/
+├── public/
+│   └── images/
+├── src/
+│   ├── js/
+│   ├── css/
+│   └── db.json
+├── index.html
+└── yarn.lock
+            </code></pre>
+      </ul>
+
+      <h2>3. 资源引入</h2>
+      <p>使用 Font Awesome 图标库，通过 CDN 方式引入：</p>
+      <pre><code>&lt;link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet"&gt;</code></pre>
+
+      <h2>4. JSON 数据结构</h2>
+      <p>
+        项目中使用 JSON 文件存储图片和按钮的信息，通过 JavaScript
+        动态加载这些数据。
+      </p>
+      <pre><code>{
+  "images": [
+    { "id": 1, "url": "/images/image1.jpg" },
+    { "id": 2, "url": "/images/image2.jpg" },
+    { "id": 3, "url": "/images/image3.jpg" },
+    { "id": 4, "url": "/images/image4.jpg" },
+    { "id": 5, "url": "/images/image5.jpg" },
+    { "id": 6, "url": "/images/image6.jpg" }
+  ],
+  "buttons": [
+    { "id": 1, "classList": ["fa", "fa-angle-left"] },
+    { "id": 2, "classList": ["fa", "fa-angle-right"] }
+  ]
+}
+        </code></pre>
+
+      <h2>5. CSS 样式与布局</h2>
+      <pre><code>
+.card-group {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+.card {
+  width: 20rem;
+  aspect-ratio: 2 / 3;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5);
+  transition: all 0.5s;
+}
+
+.button-group {
+  position: absolute;
+  bottom: 5rem;
+  display: flex;
+  gap: 2rem;
+}
+
+.button {
+  width: 4rem;
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #6B8692;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.button:active {
+  background-color: #9EB1BF;
+  box-shadow: none;
+}
+        </code></pre>
+
+      <h2>6. JavaScript 逻辑实现</h2>
+      <p><strong>动态加载图片和按钮：</strong></p>
+      <pre><code>
+// 读取并解析JSON数据
+fetch('./src/db.json')
+  .then(response => response.json())
+  .then(data => {
+    const images = data.images;
+    const buttons = data.buttons;
+
+    // 创建图片卡片并插入页面
+    const cardGroup = document.createElement('div');
+    cardGroup.classList.add('card-group');
+
+    images.forEach(image => {
+      const card = document.createElement('div');
+      card.classList.add('card');
+      card.style.backgroundImage = `url(${image.url})`;
+      cardGroup.appendChild(card);
+    });
+
+    document.getElementById('app').appendChild(cardGroup);
+
+    // 创建按钮并插入页面
+    const buttonGroup = document.createElement('div');
+    buttonGroup.classList.add('button-group');
+
+    buttons.forEach(button => {
+      const btn = document.createElement('div');
+      btn.classList.add('button');
+      button.classList.forEach(cls => btn.classList.add(cls));
+      buttonGroup.appendChild(btn);
+    });
+
+    document.getElementById('app').appendChild(buttonGroup);
+  });
+        </code></pre>
+
+      <h2>7. 实现图片切换功能</h2>
+      <pre><code>
+const leftButton = document.querySelector('.fa-angle-left');
+const rightButton = document.querySelector('.fa-angle-right');
+
+// 左侧按钮点击事件
+leftButton.addEventListener('click', () => {
+  const firstCard = cardGroup.firstElementChild;
+  cardGroup.appendChild(firstCard); // 将第一张图片移到最后
+});
+
+// 右侧按钮点击事件
+rightButton.addEventListener('click', () => {
+  const lastCard = cardGroup.lastElementChild;
+  cardGroup.insertBefore(lastCard, cardGroup.firstElementChild); // 将最后一张图片移到最前
+});
+        </code></pre>
+
+      <h2>8. 动效实现</h2>
+      <pre><code>
+.card {
+  transition: all 0.5s ease;
+}
+        </code></pre>
+      <div id="app"></div>
+    </div>
+
+    <script>
+      // 模拟 JSON 数据
+      const data = {
+        images: [
+          { id: 1, url: "https://via.placeholder.com/400x600?text=Image+1" },
+          { id: 2, url: "https://via.placeholder.com/400x600?text=Image+2" },
+          { id: 3, url: "https://via.placeholder.com/400x600?text=Image+3" },
+          { id: 4, url: "https://via.placeholder.com/400x600?text=Image+4" },
+          { id: 5, url: "https://via.placeholder.com/400x600?text=Image+5" },
+          { id: 6, url: "https://via.placeholder.com/400x600?text=Image+6" },
+        ],
+        buttons: [
+          { id: 1, classList: ["fa", "fa-angle-left"] },
+          { id: 2, classList: ["fa", "fa-angle-right"] },
+        ],
+      };
+
+      // 动态加载图片和按钮
+      const app = document.getElementById("app");
+      const cardGroup = document.createElement("div");
+      cardGroup.classList.add("card-group");
+
+      // 创建图片卡片并插入页面
+      data.images.forEach((image) => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.style.backgroundImage = `url(${image.url})`;
+        cardGroup.appendChild(card);
+      });
+
+      // 创建按钮并插入页面
+      const buttonGroup = document.createElement("div");
+      buttonGroup.classList.add("button-group");
+
+      data.buttons.forEach((button) => {
+        const btn = document.createElement("div");
+        btn.classList.add("button");
+        button.classList.forEach((cls) => btn.classList.add(cls));
+        buttonGroup.appendChild(btn);
+      });
+
+      // 插入到页面
+      app.appendChild(cardGroup);
+      app.appendChild(buttonGroup);
+
+      // 实现图片切换功能
+      const leftButton = document.querySelector(".fa-angle-left");
+      const rightButton = document.querySelector(".fa-angle-right");
+
+      leftButton.addEventListener("click", () => {
+        const firstCard = cardGroup.firstElementChild;
+        cardGroup.appendChild(firstCard); // 将第一张图片移到最后
+      });
+
+      rightButton.addEventListener("click", () => {
+        const lastCard = cardGroup.lastElementChild;
+        cardGroup.insertBefore(lastCard, cardGroup.firstElementChild); // 将最后一张图片移到最前
+      });
+    </script>
+  </body>
+</html>

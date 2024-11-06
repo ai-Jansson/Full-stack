@@ -1,0 +1,320 @@
+不熟悉的题目有
+	17 19 20 24 32 35
+
+不会的题目有：
+	13  26 28 34
+
+
+
+
+
+
+
+11、取得最后入职的 5 名员工
+	
+	select 
+		ename, HIREDATE
+	from 
+		emp 
+	ORDER BY 
+		HIREDATE desc
+	limit 5
+
+12、取得每个薪水等级有多少员工
+	
+	select 
+		s.grade, COUNT(*) 
+	FROM
+		emp as e 
+	JOIN
+		salgrade as s 
+	on 
+		e.sal BETWEEN s.LOSAL and s.HISAL
+	group by
+		s.GRADE
+		
+13、面试题：
+	有 3 个表 S(学生表)，C（课程表），SC（学生选课表）
+	S（SNO，SNAME）代表（学号，姓名）
+	C（CNO，CNAME，CTEACHER）代表（课号，课名，教师）
+	SC（SNO，CNO，SCGRADE）代表（学号，课号，成绩）
+	问题：
+	1.找出没选过“黎明”老师的所有学生姓名。
+	2.列出 2 门以上（含2 门）不及格学生姓名及平均成绩。
+	3.即学过 1 号课程又学过 2 号课所有学生的姓名。
+
+
+14、列出所有员工及领导的姓名
+
+	SELECT
+	 a.ENAME as empoyee, b.ename as empoyer
+	FROM
+		emp as a 
+	LEFT JOIN
+		emp as  b
+	on 
+	a.mgr = b.EmPNO
+
+15、列出受雇日期早于其直接上级的所有员工的编号,姓名,部门名称
+	SELECT
+		a.ENAME as empoyee, b.ename as empoyer,b.hiredate as empoyerdate, a.HIREDATE as empoyeedate 
+	FROM
+		emp as a 
+	LEFT JOIN
+		emp as  b
+	on 
+		a.mgr = b.EmPNO
+	WHERE
+		b.hiredate > a.HIREDATE
+
+16、列出部门名称和这些部门的员工信息, 同时列出那些没有员工的部门
+	
+	SELECT
+		d.dname,e.*
+	FROM
+		emp as e 
+	right join 
+		dept as d 
+	on 
+		e.DEPTNO = d.DEPTNO
+	
+17、列出至少有 5 个员工的所有部门
+
+	盲点：对 having 用法不熟练，记住分组函数不可用在where后
+	
+	SELECT 
+		deptno,COUNT(*) as people 
+	FROM 
+		emp 
+	GROUP BY	
+		DEPTNO
+	HAVING
+		COUNT(*) >=5
+	
+18、列出薪金比"SMITH" 多的所有员工信息
+	
+	SELECT
+		*
+	FROM
+		emp
+	WHERE
+		sal >( select sal FROM emp where ename = "smith")
+		
+19、 列出所有"CLERK"( 办事员) 的姓名及其部门名称, 部门的人数
+
+	盲点：两张表连接找相同元素关联在一起
+	
+	select 
+		e.ename ,d.dname,t.people
+	FROM
+		emp as e 
+	join 
+		dept as d
+	on 
+		e.DEPTNO = d.DEPTNO
+	LEFT JOIN 
+		(select deptno,count(*) as people FROM emp GROUP BY DEPTNO ) as t
+	ON
+		t.deptno = e.DEPTNO
+	WHERE
+		e.job = 'clerk';
+
+20、列出最低薪金大于 1500 的各种工作及从事此工作的全部雇员人数
+
+	盲点：
+		1. 对 count 不熟悉。count 联合 group by 可以统计各分组的行数。
+		
+	select 
+		count(*)
+	FROM
+		emp
+	GROUP BY
+		job
+	having 
+		min(sal) > 1500	
+
+	
+21、列出在部门"SALES"< 销售部> 工作的员工的姓名, 假定不知道销售部的部门编号.
+	方法一：
+	
+	SELECT
+		e.ENAME, t.dname
+	FROM
+		emp as e
+	JOIN
+		(SELECT DEPTNO,dname FROM dept where  dname = "sales") as t 
+	on 
+		e.DEPTNO = t.DEPTNO
+	
+	方法二：
+	
+	select 
+		ename 
+	from
+		emp
+	where deptno = (select deptno FROM dept WHERE dname = "sales")
+	
+22、列出薪金高于公司平均薪金的所有员工, 所在部门, 上级领导, 雇员的工资等级.
+
+	SELECT
+		a.ename, d.DNAME, b.ename as manager , s.grade as salgrade 
+	FROM
+		emp as a
+	LEFT JOIN
+		dept as d
+	ON
+		a.DEPTNO = d.DEPTNO
+	left JOIN
+		emp as b
+	on 
+		a.mgr = b.EMPNO
+	left JOIN
+		salgrade as s
+	ON
+		a.sal BETWEEN s.loSAL and s.HISAL
+	WHERE
+		a.sal > (select avg(sal) from emp)
+		
+23、列出与"SCOTT" 从事相同工作的所有员工及部门名称
+	select 
+		e.ename, d.Dname
+	from
+		emp as e 
+	JOIN 
+		dept as d 
+	on 
+		e.DEPTNO = d.DEPTNO
+	where 
+		e.job = (select job from emp where ename = "scott") and e.ename != "scott"
+	
+24、列出薪金等于部门 30 中员工的薪金的其他员工的姓名和薪金.
+	
+	盲点：in的用法不理解
+	
+	select
+		ename, sal
+	from 
+		emp
+	where 
+		sal in (select sal from emp where	DEPTNO = 30) and DEPTNO <> 30
+		
+25、列出薪金高于在部门 30 工作的所有员工的薪金的员工姓名和薪金. 部门名称
+
+	select
+	e.ename, e.sal, d.dname,e.DEPTNO
+	FROM
+		emp as e 
+	JOIN
+		dept as d 
+	ON
+		e.DEPTNO = d.DEPTNO
+	where 
+		e.sal>(SELECT max(sal) FROM emp where DEPTNO = 30);
+		
+26、列出在每个部门工作的员工数量, 平均工资和平均服务期限
+
+	
+
+27、列出所有员工的姓名、部门名称和工资。
+
+	SELECT
+		e.ename , d.dname, e.sal
+	FROM
+		emp as e 
+	left JOIN
+		dept as d
+	on 
+		e.DEPTNO = d.DEPTNO
+
+28、列出所有部门的详细信息和人数
+
+
+	
+
+
+
+
+29、列出各种工作的最低工资及从事此工作的雇员姓名
+	
+	SELECT
+		t.SAL, e.ename,t.job
+	FROM
+		emp as e 
+	JOIN
+		(SELECT job,min(sal) as SAL FROm emp GROUP BY JOB) as t
+	on 
+		e.job = t.job 
+	and 
+		e.sal = t.SAL 
+
+30、列出各个部门的上司的最低薪金
+
+	SELECT 
+		t.deptno ,min(t.sal)
+	from
+	(	select	
+			b.ename as manager ,b.sal ,a.DEPTNO 
+		from 
+			emp as a 
+		left join 
+			emp as b 
+		on
+			a.mgr = b.EMPNO	) as t
+	GROUP BY
+		t.deptno
+
+31、列出各个部门的 MANAGER( 领导) 的最低薪金
+
+	SELECT
+		deptno, min(sal)
+	FROM
+		emp
+	where
+		job = "manager"
+	group BY
+		deptno
+		
+32、列出所有员工的 年工资, 按 年薪从低到高排序
+
+	盲点：只要null参与运算，结果均为NULL，ifnull(comm,0)可以将comm中为null转换为0
+	
+	SELECT
+		ename,(sal + ifnull(comm,0)) as yearsal 
+	FROM
+		emp
+	ORDER BY
+		sal asc
+
+33、求出员工领导的薪水超过3000的员工名称与领导
+
+	SELECT
+		a.ename,b.ENAME,b.sal
+	FROM
+		emp	as a 
+	left JOIN
+		emp as b
+	ON
+		a.mgr = b.EMPNO
+	where
+		b.sal > 3000
+		
+34、求出部门名称中, 带'S'字符的部门员工的工资合计、部门人数
+	
+	盲点：在mysql中尽可能的使用单引号''
+		  like的用法
+	
+	SELECT
+		d.dname,count(*),sum(sal)
+	FROM
+		emp as e
+	right JOIN
+		dept as d 
+	ON
+		e.DEPTNO = d.DEPTNO
+	GROUP BY
+		d.dname
+	HAVING
+			d.DNAME like '%s%'
+
+
+35、给任职日期超过 30 年的员工加薪 10%.

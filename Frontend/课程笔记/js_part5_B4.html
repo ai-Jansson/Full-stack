@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>课程笔记 - 项目收尾与复习</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+
+            background-color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        h3 {
+            color: #007bff;
+        }
+        .section {
+            /* background-color: #fff; */
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .highlight {
+            background-color: #e7f3ff;
+            padding: 10px;
+            border-left: 5px solid #007bff;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>课程笔记 - 项目收尾与复习</h1>
+
+<div class="section">
+    <h2>1. 项目进展总结</h2>
+    <p>今天的目标是完成我们花了四节课一直在做的项目。上节课我们讲解了三个主要部分，今天剩下一点内容需要处理，重点是 tag 区域和最后的 card 区域。card 区域是项目中的难点，需要特别注意。</p>
+</div>
+
+<div class="section">
+    <h2>2. card 区域的处理</h2>
+    <p>card 区域的主要挑战在于其复杂的结构和交互。我们要先完成 request 部分，接着处理 <span class="highlight">add button list toggle</span> 功能。这个功能允许用户点击按钮进行操作。</p>
+    <p>如果在上一期代码中没有这部分功能，请查看我们这节课的代码版本，因为新代码中已经包含了这些功能。</p>
+</div>
+
+<div class="section">
+    <h2>3. request list 实现</h2>
+    <p>我们通过 <span class="highlight">Request list class</span> 动态生成请求列表，其中的构造函数 <strong>constructor</strong> 会处理请求信息 request inform。</p>
+    <p>通过循环 <code>forEach</code> 遍历请求列表，将每个请求生成 DOM 节点并插入页面中。</p>
+</div>
+
+<div class="section">
+    <h2>4. card 结构的实现</h2>
+    <p>card 由多个部分组成，包括 <strong>profile、picture、control、comment</strong>。每个部分都通过单独的类构造，确保各部分的动态生成和 DOM 操作。</p>
+    <p>card 结构中的每个组件通过 <strong>class 和 constructor</strong> 来处理 DOM 元素的创建和属性设置。</p>
+    <p>card 的内容可以通过数据动态生成，比如 profile 区域展示用户头像、名称和好友信息，comment 区域展示用户的评论和交互按钮。</p>
+</div>
+
+<div class="section">
+    <h2>5. CSS 样式和布局</h2>
+    <ul>
+        <li>使用 <code>flex</code> 布局来排列页面中的各个区域，确保响应式设计和页面的自适应。</li>
+        <li>渐变背景通过 <code>linear-gradient</code> 实现，突出图片和文字内容。</li>
+        <li>按钮和其他交互元素的状态切换通过 <strong>hover 和 active</strong> 类进行样式控制。</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>6. 私有变量的使用</h2>
+    <p>我们在 card 中使用了私有变量（通过 <strong>#</strong> 号标记），来确保某些属性无法被外部修改，提高代码的安全性和可维护性。</p>
+    <p>通过 <code>get</code> 和 <code>set</code> 方法，允许外部访问或修改特定的私有变量，同时保持类的封装性。</p>
+</div>
+
+<div class="section">
+    <h2>7. 响应式设计和媒体查询</h2>
+    <ul>
+        <li>在小屏幕设备上，通过媒体查询 (<code>media query</code>) 对布局进行调整，确保页面在不同设备上都有良好的展示效果。</li>
+        <li>对于较小的屏幕，可以缩小字体大小，或者隐藏某些不必要的内容以优化布局。</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>总结与后续任务</h2>
+    <p>今天的主要工作是完成了 card 区域的开发，并且复习了 request list 的实现。接下来，请大家根据自己的项目需求修改代码，比如调整颜色、图片、样式等，并将项目部署上线。</p>
+    <p>下节课我们将进入新的内容，介绍 <strong>Three.js</strong>，用于创建 3D 立体效果的网页组件。请大家提前预习。</p>
+</div>
+
+</body>
+</html>
